@@ -5,6 +5,7 @@ export default function Createpost() {
     return (
         <div>
             <Header />
+            <div className='mt-[120px]'>
             <div className='border-b-[1px]'>
                 <h1 className='text-[30px] font-medium  p-[20px_50px]'>
                     Đăng tin mới
@@ -67,6 +68,7 @@ export default function Createpost() {
                         Đăng bài
                     </button>
                 </div>
+            </div>
             </div>
 
         </div>

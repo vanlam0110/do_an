@@ -28,17 +28,25 @@ function Login2() {
             usename: event.target.username.value,
             phone: event.target.phone.value,
             password: event.target.password.value,
+            confirmpassword: event.target.confirmpassword.value,
         }
-        postData(data)
-        alert("Đăng nhập thành công")
-        navigate('/login')
+
+        if (data.password === data.confirmpassword) {
+            postData(data)
+            alert("Tạo khoản thành công")
+            navigate('/login')
+        } else {
+            alert("Tạo khoản không thành công")
+
+        }
+
     }
     return (
         <div>
             <Header />
-            <div className='flex justify-center items-center pt-[20px]'>
+            <div className='flex justify-center items-center pt-[180px]'>
                 <form className='border border-[#dedede] w-[600px] p-[30px_30px_100px] flex flex-col gap-3' onSubmit={onSubmit}>
-                    <h1 className='text-[32px] font-bold'>Đăng nhập</h1>
+                    <h1 className='text-[32px] font-bold'>Đăng Kí</h1>
                     <div className='flex flex-col gap-5'>
                         <div className='w-full flex flex-col'>
                             <label>HỌ TÊN</label>
@@ -49,8 +57,12 @@ function Login2() {
                             <input value={phone.phone} type={'number'} name='phone' className='bg-[#e8f0fe] rounded-[4px] border h-[45px]' />
                         </div>
                         <div className='w-full flex flex-col'>
-                            <label>TẠO MẬT KHẨU</label>
+                            <label>MẬT KHẨU</label>
                             <input value={password.password} type={'password'} name='password' className='bg-[#e8f0fe] rounded-[4px] border h-[45px]' />
+                        </div>
+                        <div className='w-full flex flex-col'>
+                            <label>NHẬP LẠI MẬT KHẨU</label>
+                            <input value={password.password} type={'password'} name='confirmpassword' className='bg-[#e8f0fe] rounded-[4px] border h-[45px]' />
                         </div>
                     </div>
 
@@ -61,7 +73,7 @@ function Login2() {
                             Bạn đã có tài khoản?
                         </p>
 
-                        <a className='text-[#1266dd] hover:text-[#f60] cursor-pointer'>
+                        <a href='/login' className='text-[#1266dd] hover:text-[#f60] cursor-pointer'>
                             Đăng nhập ngay
                         </a>
                     </div>

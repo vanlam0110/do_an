@@ -3,7 +3,7 @@ import logo from './logo.svg';
 import Home from './components/Home';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Login from './components/Login';
-import Login2 from './components/Login2';
+import Login2 from './components/Register';
 import Createpost from './components/CreatePost'
 const router = createBrowserRouter([
 	{

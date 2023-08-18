@@ -7,7 +7,7 @@ export default function Home() {
   return (
     <div>
         <Header/>
-        {/* <Session1/> */}
+        <Session1/>
         <Main/>
         <Footer/>
         
