@@ -1,0 +1,18 @@
+.login{
+    background-image: url(/public/image/paner1.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.bg-login{
+    background-color: rgba(240, 248, 255, 0.259);
+}
+.register{
+    background-image: url(https://autopro8.mediacdn.vn/2019/1/9/13999f3b-2020-mercedes-cla-07-1547028664859629698997.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.bg-register{
+    background-color: rgba(240, 248, 255, 0.259);
+}

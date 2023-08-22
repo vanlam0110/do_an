@@ -38,7 +38,7 @@ function Main() {
                                             </div>
                                             <p className='text-[#8a8d91]'>{item.content}</p>
                                             <div className='flex justify-around'>
-                                                <p>{item.name}</p>
+                                                <p>{item.username}</p>
                                                 <a className='border border-[#1266dd] bg-[#1266dd] text-white rounded p-[3px_7px]' href='tel:0901984912'>{item.phone}</a>
                                             </div>
                                         </div>

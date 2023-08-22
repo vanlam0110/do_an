@@ -10,7 +10,7 @@ function Header() {
 
     const handleLogout = () => {
         setState({ phone: '', password: '', username: '' });
-        window.localStorage.setItem('username', '')
+        window.localStorage.removeItem('phone')
     }
     return (
         <div className='flex justify-between items-center h-[120px] p-[20px_50px] shadow-[0_2px_4px_rgba(0,0,0,.1)] bg-black fixed left-0 top-0 right-0 z-10'>
@@ -30,7 +30,7 @@ function Header() {
             </div>
 
             <div className='flex gap-2 items-center justify-center h-full'>
-                {state?.username ? (
+                {state?.phone ? (
                     <div className='flex gap-2 h-full items-center'>
                         <div className=''>
                             <p className='text-[#fff]'>{state.username}</p>
@@ -43,15 +43,17 @@ function Header() {
                             <BiLogOut size={20} />
                             Đăng xuất
                         </button>
+                        <Link to="/createpost">
+                    <button className='bg-[#f73859] text-white w-[120px] h-[40px] rounded flex items-center justify-center gap-1'><IoAddCircleOutline size={20} />Đăng tin</button>
+                </Link>
                     </div>
                 ) : (
                     <Link to="/login">
                         <button className='bg-[#3961fb] text-white w-[120px] h-[40px] rounded flex items-center justify-center gap-1 '><BiLogIn size={20} />Đăng nhập</button>
                     </Link>
+                    
                 )}
-                <Link to="/createpost">
-                    <button className='bg-[#f73859] text-white w-[120px] h-[40px] rounded flex items-center justify-center gap-1'><IoAddCircleOutline size={20} />Đăng tin</button>
-                </Link>
+                
             </div>
         </div>
     )

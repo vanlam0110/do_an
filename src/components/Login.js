@@ -3,12 +3,13 @@ import Header from './Header'
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom'
 import { HomeContext } from '../context/Homecontext';
-import {AuthContext} from '../context/AuthContext';
+import { AuthContext } from '../context/AuthContext';
+import './login.css'
 
 function Login() {
-    const {list, setList} = useContext(HomeContext);
+    const { list, setList } = useContext(HomeContext);
     const navigate = useNavigate();
-    const {state, setState} = useContext(AuthContext);
+    const { state, setState } = useContext(AuthContext);
 
     const getData = async () => {
         const response = await axios.get(
@@ -29,55 +30,61 @@ function Login() {
 
         const foundUser = list.find(user => user.phone === data.phone && user.password === data.password);
 
-        if(foundUser){
+
+        if (foundUser) {
             alert('Đăng nhập thành công')
+            window.localStorage.setItem('phone', data.phone);       
             navigate('/')
             setState(foundUser);
-        }else {
+        } else {
             alert('Đăng nhập không thành công')
         }
     }
 
     useEffect(() => {
         getData();
-    },[])
+    }, [])
     return (
         <div>
             <Header />
-            <div className='flex justify-center items-center pt-[180px]'>
-                <form onSubmit={handleSubmit} className='border border-[#dedede] w-[600px] p-[30px_30px_100px] flex flex-col gap-3'>
-                    <h1 className='text-[32px] font-bold'>Đăng nhập</h1>
-                    <div className='flex flex-col gap-5'>
-                        <div className='w-full flex flex-col'>
-                            <label htmlFor='phone'>SỐ ĐIỆN THOẠI</label>
-                            <input 
-                                type={'number'} 
-                                name='phone'
-                                className='bg-[#e8f0fe] rounded-[4px] border h-[45px]' 
-                            />
+            <div className='login h-screen mt-[120px]'>
+                <div className='flex justify-center items-center pt-[70px] '>
+                    <form onSubmit={handleSubmit} className='border border-[#dedede] w-[600px] p-[30px_30px_100px] flex flex-col gap-3 bg-login'>
+                        <h1 className='text-[32px] font-bold text-white text-center'>Đăng nhập</h1>
+                        <div className='flex flex-col gap-5'>
+                            <div className='w-full flex flex-col'>
+                                {/* <label htmlFor='phone' className='text-white'>SỐ ĐIỆN THOẠI</label> */}
+                                <input
+                                    placeholder='SỐ ĐIỆN THOẠI'
+                                    type={'number'}
+                                    name='phone'
+                                    className='bg-[#e8f0fe] rounded-[4px] border h-[45px] p-[10px]'
+                                />
+                            </div>
+                            <div className='w-full flex flex-col'>
+                                {/* <label htmlFor='password'>MẬT KHẨU</label> */}
+                                <input
+                                    placeholder='MẬT KHẨU'
+                                    type={'password'}
+                                    name="password"
+                                    className='bg-[#e8f0fe] rounded-[4px] border h-[45px] p-[10px]'
+                                />
+                            </div>
                         </div>
-                        <div className='w-full flex flex-col'>
-                            <label htmlFor='password'>MẬT KHẨU</label>
-                            <input 
-                                type={'password'} 
-                                name="password" 
-                                className='bg-[#e8f0fe] rounded-[4px] border h-[45px]' 
-                            />
+
+                        <button type='submit' className='bg-[#3961fb] rounded-[5px] border h-[45px] w-full text-white font-bold'>Đăng nhập</button>
+
+                        <div className='flex justify-between'>
+                            <a className='text-[#fff] hover:text-[#f60] cursor-pointer'>
+                                Bạn quên mật khẩu?
+                            </a>
+
+                            <a href='/login2' className='text-[#fff] hover:text-[#f60] cursor-pointer'>
+                                Tạo tài khoản mới
+                            </a>
                         </div>
-                    </div>
-
-                    <button type='submit' className='bg-[#3961fb] rounded-[5px] border h-[45px] w-full text-white font-bold'>Đăng nhập</button>
-
-                    <div className='flex justify-between'>
-                        <a className='text-[#1266dd] hover:text-[#f60] cursor-pointer'>
-                            Bạn quên mật khẩu?
-                        </a>
-
-                        <a href='/login2' className='text-[#1266dd] hover:text-[#f60] cursor-pointer'>
-                            Tạo tài khoản mới
-                        </a>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
         </div>
 

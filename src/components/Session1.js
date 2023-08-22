@@ -20,11 +20,11 @@ export default function Session1() {
     <div className=''>
         <Slider {...settings}>
           <div className=''>
-            <img className='w-full h-[780px]' src='/image/paner2.png'/>
+            <img className='w-full' src='/image/paner2.png'/>
           </div>
-          <div className=''>
+          {/* <div className=''>
             <img className='w-full h-[779px]' src='/image/paner1.png'/>
-          </div>
+          </div> */}
           
         </Slider>
       </div>
