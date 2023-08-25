@@ -10,7 +10,7 @@ function Header() {
 
     const handleLogout = () => {
         setState({ phone: '', password: '', username: '' });
-        window.localStorage.removeItem('phone')
+        window.localStorage.removeItem('usename')
     }
     return (
         <div className='flex justify-between items-center h-[120px] p-[20px_50px] shadow-[0_2px_4px_rgba(0,0,0,.1)] bg-black fixed left-0 top-0 right-0 z-10'>
@@ -30,11 +30,10 @@ function Header() {
             </div>
 
             <div className='flex gap-2 items-center justify-center h-full'>
-                {state?.phone ? (
+                {state?.username ? (
                     <div className='flex gap-2 h-full items-center'>
                         <div className=''>
                             <p className='text-[#fff]'>{state.username}</p>
-                            <p className='text-[#fff]'>{state.phone}</p>
                         </div>
                         <button
 

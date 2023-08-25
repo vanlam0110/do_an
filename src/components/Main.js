@@ -22,14 +22,14 @@ function Main() {
         <div className='border-t-[1px] mt-[20px] '>
 
             <div className='flex justify-between '>
-                <div className='p-[20px_50px]'>
+                <div className='p-[20px_50px] w-full'>
                     <div className='border rounded-[4px] '>
                         <h1 className='p-[10px_50px] bg-gradient-to-r from-[#8d0209] to-[#ff0404] text-white font-bold text-[20px] text-center'>Danh sách tin thuê cho thuê xe</h1>
                         {list.map((item) => (
                             <div className='  bg-[#fff9f3]'>
                                 <div className=' border-t-[1px] border-t-[#E13427]'>
                                     <div className='flex gap-5 pt-[20px] p-[20px_10px_10px_50px]' key={item}>
-                                        <img className='w-[450px] h-[300px]' src='/image/mainxe.png' />
+                                        <img className='w-[450px] h-[300px]'  src={item.image}/>
                                         <div className='flex flex-col gap-2'>
                                             <h1 className='text-[#E13427] font-bold'>{item.title}</h1>
                                             <div className='flex gap-5'>
@@ -37,9 +37,10 @@ function Main() {
                                                 <p>{item.type}</p>
                                             </div>
                                             <p className='text-[#8a8d91]'>{item.content}</p>
-                                            <div className='flex justify-around'>
+                                            <div className='flex gap-5'>
                                                 <p>{item.username}</p>
                                                 <a className='border border-[#1266dd] bg-[#1266dd] text-white rounded p-[3px_7px]' href='tel:0901984912'>{item.phone}</a>
+                                                <a className='border border-[#1266dd] text-[#1266dd] rounded p-[3px_7px]' target={'_blank'} href='https://zalo.me/0901984912'>Nhắn zalo</a>
                                             </div>
                                         </div>
                                     </div>

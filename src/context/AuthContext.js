@@ -16,8 +16,8 @@ const AuthProvider = ({ children }) => {
 	const [state, setState] = useState(initialState); // Khởi tạo trạng thái và hàm để cập nhật trạng thái
 
 	useEffect(() => {
-		const phoneStore = window.localStorage.getItem('phone');
-		setState({ ...state, phone: phoneStore });
+		const userStore = window.localStorage.getItem('username');
+		setState({ ...state, username: userStore });
 		
 	}, []);
 

@@ -50,17 +50,17 @@ function Login2() {
                     <h1 className='text-[32px] font-bold text-white text-center'>Đăng Kí</h1>
                     <div className='flex flex-col gap-5'>
                         <div className='w-full flex flex-col'>
-                            {/* <label>HỌ TÊN</label> */}
                             <input 
-                                placeholder='HỌ TÊN'
+                                required
+                                placeholder='TÊN ĐĂNG NHẬP'  
                                 value={usename.usename} 
                                 type={'text'} 
                                 name='username' 
                                 className='bg-[#e8f0fe] rounded-[4px] border h-[45px] p-[10px]' />
                         </div>
                         <div className='w-full flex flex-col'>
-                            {/* <label>SỐ ĐIỆN THOẠI</label> */}
                             <input
+                                required
                                 placeholder='SỐ ĐIỆN THOẠI' 
                                 value={phone.phone} 
                                 type={'number'} 
@@ -68,8 +68,8 @@ function Login2() {
                                 className='bg-[#e8f0fe] rounded-[4px] border h-[45px] p-[10px]' />
                         </div>
                         <div className='w-full flex flex-col'>
-                            {/* <label>MẬT KHẨU</label> */}
                             <input 
+                                required
                                 placeholder='MẬT KHẨU'
                                 value={password.password} 
                                 type={'password'} 
@@ -77,8 +77,8 @@ function Login2() {
                                 className='bg-[#e8f0fe] rounded-[4px] border h-[45px] p-[10px]' />
                         </div>
                         <div className='w-full flex flex-col'>
-                            {/* <label>NHẬP LẠI MẬT KHẨU</label> */}
                             <input 
+                                required
                                 placeholder='NHẬP LẠI MẬT KHẨU'
                                 value={password.password} 
                                 type={'password'}

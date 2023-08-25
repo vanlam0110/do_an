@@ -1,0 +1,15 @@
+{
+    "tailwindCSS.codeActions": true,
+    "tailwindCSS.includeLanguages": {
+        "html": "html",
+        "javascript": "javascript",
+        "css": "css"
+    },
+    "editor.quickSuggestions": {
+        "strings": true
+    },
+    "files.associations": {
+        "*.css": "tailwindcss"
+      },
+      
+}

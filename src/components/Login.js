@@ -11,7 +11,7 @@ function Login() {
     const navigate = useNavigate();
     const { state, setState } = useContext(AuthContext);
 
-    const getData = async () => {
+    const getData = async () => {     
         const response = await axios.get(
             'http://localhost:8000/user',
         );
@@ -24,16 +24,16 @@ function Login() {
     const handleSubmit = (event) => {
         event.preventDefault();
         const data = {
-            phone: event.target.phone.value,
+            username: event.target.username.value,
             password: event.target.password.value,
         };
 
-        const foundUser = list.find(user => user.phone === data.phone && user.password === data.password);
+        const foundUser = list.find(user => user.username === data.username && user.password === data.password);
 
 
         if (foundUser) {
             alert('Đăng nhập thành công')
-            window.localStorage.setItem('phone', data.phone);       
+            window.localStorage.setItem('username', data.username);       
             navigate('/')
             setState(foundUser);
         } else {
@@ -53,17 +53,17 @@ function Login() {
                         <h1 className='text-[32px] font-bold text-white text-center'>Đăng nhập</h1>
                         <div className='flex flex-col gap-5'>
                             <div className='w-full flex flex-col'>
-                                {/* <label htmlFor='phone' className='text-white'>SỐ ĐIỆN THOẠI</label> */}
                                 <input
-                                    placeholder='SỐ ĐIỆN THOẠI'
-                                    type={'number'}
-                                    name='phone'
+                                    required
+                                    placeholder='TÊN ĐĂNG NHẬP'
+                                    type={'text'}
+                                    name='username'
                                     className='bg-[#e8f0fe] rounded-[4px] border h-[45px] p-[10px]'
                                 />
                             </div>
                             <div className='w-full flex flex-col'>
-                                {/* <label htmlFor='password'>MẬT KHẨU</label> */}
                                 <input
+                                    required
                                     placeholder='MẬT KHẨU'
                                     type={'password'}
                                     name="password"

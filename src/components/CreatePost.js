@@ -2,77 +2,120 @@ import React, { useEffect, useState } from 'react'
 import Header from './Header'
 import { TbCameraUp } from 'react-icons/tb'
 import axios from 'axios';
-import { Link, useNavigate } from 'react-router-dom'
+
 
 function Createpost() {
     const [title, setTitle] = useState('');
-    const [type, seType] = useState('');
+    const [type, setType] = useState('');
     const [content, setContent] = useState('');
     const [username, setUsername] = useState('');
     const [phone, setPhone] = useState('');
     const [price, setPrice] = useState('');
     const [image, setImage] = useState('');
-    const navigate = useNavigate();
+    const [baseImage, setBaseImage] = useState("");
 
-    const postData = async (data) => {
+    const postData = async (event) => {
+        event.preventDefault();
+
+        if (!title) {
+            alert("Bạn chưa điền tiêu đề");
+            return
+        }
+        if (!type) {
+            alert("Bạn chưa chọn loại xe");
+            return
+        }
+        if (!content) {
+            alert("Bạn chưa điền nội dung");
+            return
+        }
+        if (!username) {
+            alert("Bạn chưa điền họ tên");
+            return
+        }
+        if (!phone) {
+            alert("Bạn chưa điền số điện thoại");
+            return
+        }
+        if (!price) {
+            alert("Bạn chưa điền giá cho thuê");
+            return
+        }
         const response = await axios.post(
             'http://localhost:8000/car',
             {
-                title: data.title,
-                type: data.type,
-                content: data.content,
-                username: data.username,
-                phone: data.phone,
-                price: data.price,
-                // image: data.image
+                title: title,
+                type: type,
+                content: content,
+                username: username,
+                phone: phone,
+                price: price,
+                image: baseImage,
             }
+
         );
-        if (response.status === 200) {
-
+        if (response.status === 201) {
+        } else {
+            console.log("dung");
+            alert("Dang bai thanh cong")
         }
     }
 
-    const onSubmit = (event) => {
-        const data = {
-            title: event.target.title.value,
-            type: event.target.type.value,
-            content: event.target.content.value,
-            username: event.target.username.value,
-            phone: event.target.phone.value,
-            price: event.target.price.value,
-            // image: event.target.image.value,
-        }
-            postData(data)
-            alert("Đăng tin thành công")
-    }
-    const [file, setFile] = useState(null);
-    const onChangeFile = (event) => {
-        // Trường hợp chọn 1 file
-        const files = event.target.files;
-        setFile(files[0]);
-        // Trường hợp chọn nhiều file
-        // const files = event.target.files;
-        // setFile(files);
+    const handleTitle = (event) => {
+        setTitle(event.target.value);
     };
-    const onUpload = async () => {
-        const form = new FormData();
-        form.append('file', file);
-        await axios.post('http://localhost:8000/car', 
-        form, {
-            headers: {
-                'Content-Type': 'multipart/form-data',
-                Authorization: 'Bearer token', // Nếu API yêu cầu
-            },
+
+    const handleType = (event) => {
+        setType(event.target.value);
+
+    };
+
+    const handleContent = (event) => {
+        setContent(event.target.value);
+    };
+
+    const handleUsername = (event) => {
+        setUsername(event.target.value);
+    };
+
+    const handlePhone = (event) => {
+        setPhone(event.target.value);
+    };
+
+    const handlePrice = (event) => {
+        setPrice(event.target.value);
+    }
+
+    const handleImage = (event) => {
+        setImage(event.target.value);
+    }
+
+    const uploadImage = async (e) => {
+        const file = e.target.files[0];
+        const base64 = await convertBase64(file);
+        setBaseImage(base64);
+    };
+
+    const convertBase64 = (file) => {
+        return new Promise((resolve, reject) => {
+            const fileReader = new FileReader();
+            fileReader.readAsDataURL(file);
+
+            fileReader.onload = () => {
+                resolve(fileReader.result);
+            };
+
+            fileReader.onerror = (error) => {
+                reject(error);
+            };
         });
     };
-    const onRemoveFile = () => {
-        setFile(null);
-    };
+
     return (
 
         <div>
             <Header />
-            <form onSubmit={onSubmit} className='mt-[120px]'>
+            <form className='mt-[120px]'>
                 <div className='border-b-[1px]'>
                     <h1 className='text-[30px] font-medium  p-[20px_50px]'>
                         Đăng tin mới
@@ -83,34 +126,38 @@ function Createpost() {
                     <div className='flex flex-col gap-2'>
                         <label className='font-bold'>Tiêu đề</label>
                         <input
-                            value={title.title}
+                            required
+                            value={title}
+                            onChange={handleTitle}
                             name='title'
                             className='rounded-[4px] border h-[40px] w-1/4 p-[10px]' />
                     </div>
                     <div className='flex flex-col gap-2 '>
                         <label className='font-bold'>Chọn Loại xe</label>
-                        <select value={type.type} className='rounded-[4px] border h-[40px] w-1/4 p-[10px]' name='type'>
+                        <select onChange={handleType} value={type} className='rounded-[4px] border h-[40px] w-1/4 p-[10px]' name='type'>
                             <option value={'1'}>Chọn Loại Xe</option>
-                            <option value={'2'}>Xe SỐ</option>
-                            <option value={'3'}>Xe Ga</option>
-                            <option value={'4'}>Xe Tay côn</option>
-                            <option value={'5'}>Xe Otô 4 Chỗ</option>
-                            <option value={'6'}>Xe Otô 7 Chỗ</option>
+                            <option value={'Xe Số'}>Xe SỐ</option>
+                            <option value={'Xe Ga'}>Xe Ga</option>
+                            <option value={'Xe Tay côn'}>Xe Tay côn</option>
+                            <option value={'Xe Otô 4 Chỗ'}>Xe Otô 4 Chỗ</option>
+                            <option value={'Xe Otô 7 Chỗ'}>Xe Otô 7 Chỗ</option>
                         </select>
                     </div>
 
                     <div className='flex flex-col gap-2 '>
                         <label className='font-bold'>Nội dung mô tả</label>
                         <textarea
-                            value={content.content}
+                            onChange={handleContent}
+                            value={content}
                             name='content'
                             className='rounded-[4px] border h-[140px] w-3/4 p-[10px]'> </textarea>
                     </div>
 
                     <div className='flex flex-col gap-2'>
-                        <label className='font-bold'>Thông tin liên hệ</label>
+                        <label className='font-bold'>Họ tên người cho thuê</label>
                         <input
-                            value={username.username}
+                            value={username}
+                            onChange={handleUsername}
                             name='usename'
                             className='rounded-[4px] border h-[40px] w-1/4 p-[10px]' />
                     </div>
@@ -118,7 +165,8 @@ function Createpost() {
                     <div className='flex flex-col gap-2'>
                         <label className='font-bold'>Số điện thoại</label>
                         <input
-                            value={phone.phone}
+                            onChange={handlePhone}
+                            value={phone}
                             name='phone'
                             className='rounded-[4px] border h-[40px] w-1/4 p-[10px]' />
                     </div>
@@ -126,7 +174,8 @@ function Createpost() {
                     <div className='flex flex-col gap-2 '>
                         <label className='font-bold'>Giá cho thuê</label>
                         <input
-                            value={price.price}
+                            value={price}
+                            onChange={handlePrice}
                             name='price'
                             className='rounded-[4px] border h-[40px] w-1/4 p-[10px]' />
                     </div>
@@ -141,21 +190,21 @@ function Createpost() {
                                 <TbCameraUp size={40} />
                                 Thêm ảnh
                             </label>
-                            <input hidden type={'file'} id='file' onChange={onChangeFile}/>
-                            {file && (
+                            <div className='w-full'>
+                                <h3 className='font-medium py-4'>Ảnh đã chọn</h3>
+                            </div>
+                            {baseImage && (
                                 <div className=''>
-                                    <img
-                                        src={URL.createObjectURL(file)}
-                                        alt=""
-                                        className="w-40 "
-                                    />
+                                    <img src={baseImage} className="w-64 "></img>
                                 </div>
                             )}
+                            <input onChange={uploadImage} hidden type={'file'} id='file' />
+                            
                         </div>
                     </div>
 
                     <div>
-                        <button className='bg-[#3961fb] rounded-[5px] border h-[45px] w-3/4 text-white font-bold'>
+                        <button onClick={postData} className='bg-[#3961fb] rounded-[5px] border h-[45px] w-3/4 text-white font-bold'>
                             Đăng bài
                         </button>
                     </div>
