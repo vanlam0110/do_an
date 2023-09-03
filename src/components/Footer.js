@@ -6,7 +6,7 @@ import { AiFillInstagram } from 'react-icons/ai'
 import { AiFillTwitterCircle } from 'react-icons/ai'
 export default function Footer() {
     return (
-        <div className='border-t-[1px]'>
+        <div className='border-t-[1px] border-t-[#262626] bg-black'>
 
             <div className='flex justify-between items-center p-[20px_50px] '>
                 <div className=''>

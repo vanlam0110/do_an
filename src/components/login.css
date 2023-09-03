@@ -16,3 +16,33 @@
 .bg-register{
     background-color: rgba(240, 248, 255, 0.259);
 }
+
+table, th, tr{
+    border: 1px solid;
+    padding: 10px;
+    text-align: center;
+}
+
+.quanly:hover .con{
+    display: block;
+    background-color: white;
+    position: absolute;
+}
+
+.con {
+    display: none
+}
+
+table {
+    border-collapse: collapse;
+    border-radius: 5px;
+    /* border: none; */
+
+    border-color: #EAECF0
+}
+th, td{
+    box-shadow: 0 1px 0 #e5e9f2;
+    height: 50px;
+    border-color: #EAECF0
+}
+

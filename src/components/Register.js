@@ -24,6 +24,7 @@ function Login2() {
     }
 
     const onSubmit = (event) => {
+        event.preventDefault();
         const data = {
             usename: event.target.username.value,
             phone: event.target.phone.value,

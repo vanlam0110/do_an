@@ -5,6 +5,7 @@ import { BiLogIn } from 'react-icons/bi'
 import { IoAddCircleOutline } from 'react-icons/io5'
 import { AuthContext } from '../context/AuthContext'
 import { BiLogOut } from 'react-icons/bi'
+import { AiFillEdit } from 'react-icons/ai'
 function Header() {
     const { state, setState } = useContext(AuthContext);
 
@@ -12,8 +13,10 @@ function Header() {
         setState({ phone: '', password: '', username: '' });
         window.localStorage.removeItem('usename')
     }
+
+
     return (
-        <div className='flex justify-between items-center h-[120px] p-[20px_50px] shadow-[0_2px_4px_rgba(0,0,0,.1)] bg-black fixed left-0 top-0 right-0 z-10'>
+        <div className='flex justify-between items-center h-[120px] p-[20px_50px] border-b border-b-[#262626] bg-black fixed left-0 top-0 right-0 z-10'>
             <div className='bg-black/80'>
                 <Link to='/'>
                     <img
@@ -23,36 +26,41 @@ function Header() {
                 </Link>
             </div>
 
-            <div>
-                <h1 className='font-bold text-[30px] text-[#f73859]'>
-                    Website thuê xe Đà nẵng
+            {/* <div>
+                <h1 className='font-nomal text-[30px] text-[#fff]'>
+                    Website thuê xe trực tuyến Đà nẵng
                 </h1>
-            </div>
+            </div> */}
 
             <div className='flex gap-2 items-center justify-center h-full'>
                 {state?.username ? (
-                    <div className='flex gap-2 h-full items-center'>
-                        <div className=''>
+                    <div className='flex gap-5 h-full items-center'> 
+                        <div className='quanly relative hover:cursor-pointer border rounded  w-full h-[40px] flex items-center justify-center p-[20px]'>
                             <p className='text-[#fff]'>{state.username}</p>
+                            <div className='con w-full mt-[65px] '>
+                                <Link to={'/post-management'}>
+                                    <p className='flex items-center justify-center gap-2'> <AiFillEdit/> Quản lý bài đăng</p>
+                                </Link>
+                            </div>
                         </div>
                         <button
 
-                            className='bg-[#3961fb] text-white w-[120px] h-[40px] rounded flex items-center justify-center gap-1 '
+                            className='bg-[#3961fb] text-white w-full h-[40px] rounded flex items-center justify-center gap-1 p-[20px]'
                             onClick={handleLogout}>
                             <BiLogOut size={20} />
                             Đăng xuất
                         </button>
                         <Link to="/createpost">
-                    <button className='bg-[#f73859] text-white w-[120px] h-[40px] rounded flex items-center justify-center gap-1'><IoAddCircleOutline size={20} />Đăng tin</button>
-                </Link>
+                            <button className='bg-[#f73859] text-white w-[120px] h-[40px] rounded flex items-center justify-center gap-1'><IoAddCircleOutline size={20} />Đăng tin</button>
+                        </Link>
                     </div>
                 ) : (
                     <Link to="/login">
                         <button className='bg-[#3961fb] text-white w-[120px] h-[40px] rounded flex items-center justify-center gap-1 '><BiLogIn size={20} />Đăng nhập</button>
                     </Link>
-                    
+
                 )}
-                
+
             </div>
         </div>
     )
