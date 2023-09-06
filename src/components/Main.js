@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from 'react'
 import axios from 'axios'
 import { HomeContext } from '../context/Homecontext'
 import { AiOutlineSearch } from 'react-icons/ai'
-import Pageination from './Pageination';
 
 function Main() {
     const { list, setList } = useContext(HomeContext);
@@ -18,15 +17,6 @@ function Main() {
         }
     };
     const [search, setSearch] = useState("");
-    const [pageination, setPageination] = useState({
-        _page: 1,
-        _limit: 10,
-        _totalRows: 1,
-    })
-
-    function handlePageChange(newPage) {
-        console.log("newPage" ,newPage );
-    }
     useEffect(() => {
         getData();
     }, []);
@@ -79,10 +69,6 @@ function Main() {
 
                             ))}
                     </div>
-                    <Pageination
-                        pageination={pageination}
-                        onPageChange={handlePageChange}
-                    />
                 </div>
 
                 {/* <div className='border-l-[1px]'>

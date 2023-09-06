@@ -33,7 +33,8 @@ function Login() {
 
         if (foundUser) {
             alert('Đăng nhập thành công')
-            window.localStorage.setItem('username', data.username);       
+            window.localStorage.setItem('username', data.username);    
+            localStorage.setItem("isLogin", data.username);   
             navigate('/')
             setState(foundUser);
         } else {

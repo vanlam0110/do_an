@@ -1,4 +1,5 @@
-import { createContext, useEffect, useState } from 'react';
+import React, { createContext, useEffect, useState } from "react";
+import axios from "axios";
 
 // buoc 1
 const AuthContext = createContext();
@@ -13,6 +14,7 @@ const initialState = {
 	username: '',
 };
 const AuthProvider = ({ children }) => {
+
 	const [state, setState] = useState(initialState); // Khởi tạo trạng thái và hàm để cập nhật trạng thái
 
 	useEffect(() => {

@@ -1,22 +1,29 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import Header from './Header'
 import { TbCameraUp } from 'react-icons/tb'
 import axios from 'axios';
 import { useParams } from "react-router-dom";
+import { Context } from '../context/Context';
 
 function EditCreatePost() {
-    const [list, setList] = useState([]);
-
+    const { listCar } = useContext(Context)
+    console.log(listCar);
     const [baseImage, setBaseImage] = useState("");
-    const [option, setOption] = useState("");
     const { id } = useParams();
     const [imageChanged, setImageChanged] = useState(false);
-    const [title, setTitle] = useState(object.title);
-    const [content, setContent] = useState(object.content);
-    const [type, setType] = useState(object.type);
-    const [price, setPrice] = useState(object.price);
-    const [username, setUsername] = useState(object.username);
-    const [phone, setPhone] = useState(object.phone);
+    const [option, setOption] = useState("");
+    const [title, setTitle] = useState("");
+    const [content, setContent] = useState("");
+    const [type, setType] = useState("");
+    const [price, setPrice] = useState("");
+    const [username, setUsername] = useState("");
+    const [phone, setPhone] = useState("");
+
+    const object = listCar.find((item) => item.id == id);
+
+
+    
+
 
     const handleTitle = (event) => {
         setTitle(event.target.value);
@@ -25,6 +32,10 @@ function EditCreatePost() {
     const handleContent = (event) => {
         setContent(event.target.value);
     };
+
+    const handleType = (event) => {
+        setType(event.target.value);
+    }
 
     const handleUsername = (event) => {
         setUsername(event.target.value);
@@ -37,7 +48,48 @@ function EditCreatePost() {
     const handlePrice = (event) => {
         setPrice(event.target.value);
     }
+    useEffect(() => {
+        const fetchData = async () => {
+          // Sử dụng promises để đọc giá trị title và content từ obj
+          const titlePromise = new Promise((resolve) => {
+            resolve(object ? object.title : "");
+          });
     
+          const contentPromise = new Promise((resolve) => {
+            resolve(object ? object.content : "");
+          });
+
+          const usernamePromise = new Promise((resolve) => {
+            resolve(object ? object.username : "");
+          });
+
+          const phonePromise = new Promise((resolve) => {
+            resolve(object ? object.phone : "");
+          });
+
+          const pricePromise = new Promise((resolve) => {
+            resolve(object ? object.price : "");
+          });
+    
+          // Chờ tất cả promises hoàn thành
+          const [titleValue, contentValue, usenameValue, phoneValue, priceValue] = await Promise.all([
+            titlePromise,
+            contentPromise,
+            usernamePromise,
+            phonePromise,
+            pricePromise
+          ]);
+    
+          // Cập nhật state title và content sau khi promises đã hoàn thành
+          setTitle(titleValue);
+          setContent(contentValue);
+          setUsername(usenameValue);
+          setPhone(phoneValue);
+          setPrice(priceValue);
+        };
+        console.log(price);
+        fetchData();
+      }, [object]);
     const updateData = async () => {
         try {
           // Khi đã chọn ảnh mới thì lấy ảnh mới up lên nếu không thì vẫn giữ ảnh cũ và dữ liệu cũ
@@ -54,7 +106,7 @@ function EditCreatePost() {
                 image: baseImage,
               }
             );
-            alert("cap nhat thanh cong");
+            alert("cập nhật thành công");
           } else {
             const response = await axios.put(
               `http://localhost:8000/car/${id}`,
@@ -80,53 +132,26 @@ function EditCreatePost() {
       };
 
 
-      const getData = async () => {
-        try {
+    // const options = [
+    //     { id: 1, value: "1", name: "Chọn Loại Xe" },
+    //     { id: 2, value: "Xe Số", name: "Xe Số" },
+    //     { id: 3, value: "Xe Ga", name: "Xe Ga" },
+    //     { id: 4, value: "Xe Tay côn", name: "Xe Tay côn" },
+    //     { id: 5, value: "Xe Otô 4 Chỗ", name: "Xe Otô 4 Chỗ" },
+    //     { id: 6, value: "Xe Otô 7 Chỗ", name: "Xe Otô 7 Chỗ" },
+    // ]
 
-            const response = await axios.get(`http://localhost:8000/car`);
-            console.log(response)
-            if (response.status === 200) {
-                setList(response.data)
-            }
-        } catch (error) {
-            console.log("err", error);
-        }
-    }
+    // const handleRenderOptionList = () => {
+    //     return options?.map((item) => {
+    //         return (
+    //             <option key={item.id} value={item.value}>{item.name}</option>
+    //         )
+    //     })
+    // }
 
-    useEffect(() => {
-        getData()
-
-    }, [id]);
-
-
-    const options = [
-        { id: 1, value: "1", name: "Chọn Loại Xe" },
-        { id: 2, value: "Xe Số", name: "Xe Số" },
-        { id: 3, value: "Xe Ga", name: "Xe Ga" },
-        { id: 4, value: "Xe Tay côn", name: "Xe Tay côn" },
-        { id: 5, value: "Xe Otô 4 Chỗ", name: "Xe Otô 4 Chỗ" },
-        { id: 6, value: "Xe Otô 7 Chỗ", name: "Xe Otô 7 Chỗ" },
-    ]
-
-    const handleRenderOptionList = () => {
-        return options?.map((item) => {
-            return (
-                <option key={item.id} value={item.value}>{item.name}</option>
-            )
-        })
-    }
-
-    const handleOnChangeOption = (e) => {
-        setOption(e.target.value);
-    }
-
-    const object = list.find((item) => item.id == id);
-
-    console.log(list);
-
-    console.log(object);
-
-
+    // const handleOnChangeOption = (e) => {
+    //     setOption(e.target.value);
+    // }
 
 
     const uploadImage = async (e) => {
@@ -158,7 +183,7 @@ function EditCreatePost() {
             <form className='mt-[120px]'>
                 <div className='border-b-[1px]'>
                     <h1 className='text-[30px] font-medium  p-[20px_50px]'>
-                        Đăng tin mới
+                        Cập nhật bài đăng 
                     </h1>
                 </div>
 
@@ -167,7 +192,7 @@ function EditCreatePost() {
                         <label className='font-bold'>Tiêu đề</label>
                         <input
                             required
-
+                            
                             onChange={handleTitle}
                             name='title'
                             defaultValue={object?.title ? object.title : ""}
@@ -175,11 +200,13 @@ function EditCreatePost() {
                     </div>
                     <div className='flex flex-col gap-2 '>
                         <label className='font-bold'>Chọn Loại xe</label>
-                        <select
-                            defaultValue={option}
-                            onChange={(e) => handleOnChangeOption(e)}
-                            className='rounded-[4px] border h-[40px] w-1/4 pl-[10px]' name='type'>
-                            {handleRenderOptionList()}
+                        <select onChange={handleType} value={type} className='rounded-[4px] border h-[40px] w-1/4 pl-[10px]' name='type'>
+                            <option value={'1'}>Chọn Loại Xe</option>
+                            <option value={'Xe Số'}>Xe SỐ</option>
+                            <option value={'Xe Ga'}>Xe Ga</option>
+                            <option value={'Xe Tay côn'}>Xe Tay côn</option>
+                            <option value={'Xe Otô 4 Chỗ'}>Xe Otô 4 Chỗ</option>
+                            <option value={'Xe Otô 7 Chỗ'}>Xe Otô 7 Chỗ</option>
                         </select>
                     </div>
 
@@ -189,7 +216,7 @@ function EditCreatePost() {
                             onChange={handleContent}
                             defaultValue={object?.content ? object.content : ""}
                             name='content'
-                            className='rounded-[4px] border h-[140px] w-3/4 p-[10px]' />
+                            className='rounded-[4px] border h-[140px] w-3/4 p-[10px]'/>
                     </div>
 
                     <div className='flex flex-col gap-2'>

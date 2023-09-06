@@ -8,6 +8,7 @@ import Createpost from './components/CreatePost'
 import PostManagement from './components/PostManagement';
 import Admin from './admin/Admin';
 import EditCreatePost from './components/EditCreatePost';
+import EditUser from './components/EditUser';
 const router = createBrowserRouter([
 	{
 		path: '/login',
@@ -36,6 +37,10 @@ const router = createBrowserRouter([
 	{
 		path: '/post-management/edit/:id',
 		element: <EditCreatePost/>,
+	},
+	{
+		path: '/edituser',
+		element: <EditUser/>
 	}
 ]);
 

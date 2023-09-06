@@ -5,15 +5,18 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { HomeProvider } from './context/Homecontext';
 import { AuthProvider } from './context/AuthContext';
+import { MyContext } from './context/Context';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
+    <MyContext>
     <HomeProvider>
       <AuthProvider>
         <App />
       </AuthProvider>
     </HomeProvider>
+    </MyContext>
   </React.StrictMode>
 );
 
