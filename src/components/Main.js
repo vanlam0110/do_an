@@ -2,26 +2,40 @@ import React, { useContext, useEffect, useState } from 'react'
 import axios from 'axios'
 import { HomeContext } from '../context/Homecontext'
 import { AiOutlineSearch } from 'react-icons/ai'
+import {GrFormPrevious, GrFormNext} from 'react-icons/gr'
 
 function Main() {
     const { list, setList } = useContext(HomeContext);
+    const [page, setPage] = useState(1);
+    const handlePageNext = () => {
+        setPage(page + 1);
+        console.log(page);
+    }
+
+    const handlePagePrev = () => {
+        setPage(page - 1);
+        console.log(page);
+    }
 
     const getData = async () => {
         const response = await axios.get(
-            'http://localhost:8000/car'
+            `http://localhost:8000/car?_page=${page}&_limit=4`
         );
         if (response.status === 200) {
-            // setList(response.data);
+            setList(response.data);
             const reverseid = [...response.data].sort((a, b) => b.id - a.id);
             setList(reverseid)
         }
     };
+
     const [search, setSearch] = useState("");
     useEffect(() => {
         getData();
-    }, []);
+
+    }, [page]);
+
     return (
-        <div className='bg-black'>
+        <div className=''>
             <h1 className='p-[10px_50px] bg-gradient-to-r from-[#8d0209] to-[#ff0404] text-white font-bold text-[20px] text-center'>Danh sách tin thuê cho thuê xe</h1>
             <div className='flex justify-center pt-[20px]'>
                 <input
@@ -29,15 +43,13 @@ function Main() {
                     placeholder='Search'
                     onChange={(e) => setSearch(e.target.value)}
                 />
-                <i className='absolute ml-[220px] mt-[10px]'><AiOutlineSearch  size={20}/></i>
+                <i className='absolute ml-[220px] mt-[10px]'><AiOutlineSearch size={20} /></i>
                 {/* <button className='border border-[#cf1b15] w-[40px] h-[40px] bg-[#cf1b15] text-white flex justify-center items-center'><AiOutlineSearch /></button> */}
             </div>
 
             <div className='flex items-center justify-center'>
                 <div className='p-[20px_50px]'>
-
                     <div className='flex gap-5'>
-
                         {list
                             .filter((item) => {
                                 return (
@@ -70,26 +82,23 @@ function Main() {
                             ))}
                     </div>
                 </div>
-
-                {/* <div className='border-l-[1px]'>
-                    <div className='p-[20px_50px_20px_30px] flex flex-col gap-5'>
-                        
-                        <div className='border rounded-[4px] border-[#c6bfbf] '>
-                            <div className='flex flex-col'>
-                                <h1 className='border bg-gradient-to-r from-[#8d0209] to-[#ff0404] text-white font-bold text-[20px] text-center'>
-                                    Danh mục xe máy
-                                </h1>
-                                <div className='flex flex-col p-[15px]'>
-                                    <a className='border-b-[1px] border-dashed border-gray-500'>Cho Thuê Xe Số</a>
-                                    <a className='border-b-[1px] border-dashed border-gray-500'>Cho Thuê Xe Ga</a>
-                                    <a className='border-b-[1px] border-dashed border-gray-500'>Cho Thuê Xe Tay Côn</a>
-                                    <a className='border-b-[1px] border-dashed border-gray-500'>Cho Thuê Xe Otô 4 Chỗ</a>
-                                    <a>Cho Thuê Xe Otô 7 Chỗ</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div> */}
+            </div>
+            <div className='flex justify-center gap-2 items-center'>
+                <button
+                    disabled={page === 1 ? true : false}
+                    onClick={handlePagePrev}
+                    className='border bg-red-300 p-[5px_20px] rounded-[10px]'
+                >
+                   <GrFormPrevious/>
+                </button>
+                <p>{page}</p>
+                <button
+                    disabled={page === 2 ? true : false}
+                    onClick={handlePageNext}
+                    className='border bg-red-300 p-[5px_20px] rounded-[10px]'
+                >
+                    <GrFormNext/>
+                </button>
             </div>
         </div>
     )

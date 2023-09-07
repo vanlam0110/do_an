@@ -20,11 +20,7 @@ function EditCreatePost() {
     const [phone, setPhone] = useState("");
 
     const object = listCar.find((item) => item.id == id);
-
-
-    
-
-
+ 
     const handleTitle = (event) => {
         setTitle(event.target.value);
     };
