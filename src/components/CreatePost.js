@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import Header from './Header'
 import { TbCameraUp } from 'react-icons/tb'
-import axios from 'axios';
+import axios from 'axios'
+import {useNavigate} from 'react-router-dom'
+import Footer from './Footer'
 function Createpost() {
     const [title, setTitle] = useState('');
     const [type, setType] = useState('');
@@ -10,6 +12,7 @@ function Createpost() {
     const [phone, setPhone] = useState('');
     const [price, setPrice] = useState('');
     const [baseImage, setBaseImage] = useState("");
+    const navigate = useNavigate();
 
     const postData = async (event) => {
         event.preventDefault();
@@ -50,11 +53,13 @@ function Createpost() {
                 phone: phone,
                 price: price,
                 image: baseImage,
+                display: 1,
             }
 
         );
         if (response.status === 201) {
             alert("Đăng bài thàh công")
+            navigate('/')
         }
     }
 
@@ -115,7 +120,7 @@ function Createpost() {
 
         <div>
             <Header />
-            <form className='mt-[120px]'>
+            <form className=''>
                 <div className='border-b-[1px]'>
                     <h1 className='text-[30px] font-medium  p-[20px_50px]'>
                         Đăng tin mới
@@ -162,7 +167,7 @@ function Createpost() {
                             className='rounded-[4px] border h-[40px] w-1/4 p-[10px]' />
                     </div>
 
-                    <div className='flex flex-col gap-2'>
+                    <div className='flex flex-col gap-2 '>
                         <label className='font-bold'>Số điện thoại</label>
                         <input
                             onChange={handlePhone}
@@ -210,7 +215,8 @@ function Createpost() {
                     </div>
                 </div>
             </form>
-
+        
+        
         </div>
     )
 }

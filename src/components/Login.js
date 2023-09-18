@@ -5,6 +5,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { HomeContext } from '../context/Homecontext';
 import { AuthContext } from '../context/AuthContext';
 import './login.css'
+import Footer from './Footer';
 
 function Login() {
     const { list, setList } = useContext(HomeContext);
@@ -46,47 +47,48 @@ function Login() {
         getData();
     }, [])
     return (
-        <div>
+        <div className=''>
             <Header />
-            <div className='login h-screen mt-[120px]'>
-                <div className='flex justify-center items-center pt-[70px] '>
+            <div className='login '>
+                <div className='flex justify-center items-center pt-[30px] pb-[30px]'>
                     <form onSubmit={handleSubmit} className='border border-[#dedede] w-[600px] p-[30px_30px_100px] flex flex-col gap-3 bg-login'>
-                        <h1 className='text-[32px] font-bold text-white text-center'>Đăng nhập</h1>
+                        <h1 className='text-[32px] font-bold text-center'>Đăng nhập</h1>
                         <div className='flex flex-col gap-5'>
-                            <div className='w-full flex flex-col'>
+                            <div className='w-full flex flex-col gap-3'>
+                                <label>Tên đăng nhập</label>
                                 <input
                                     required
-                                    placeholder='TÊN ĐĂNG NHẬP'
                                     type={'text'}
                                     name='username'
-                                    className='bg-[#e8f0fe] rounded-[4px] border h-[45px] p-[10px]'
+                                    className='rounded-[4px] border h-[45px] p-[10px]'
                                 />
                             </div>
-                            <div className='w-full flex flex-col'>
+                            <div className='w-full flex flex-col gap-3'>
+                            <label>Mật khẩu</label>
                                 <input
                                     required
-                                    placeholder='MẬT KHẨU'
                                     type={'password'}
                                     name="password"
-                                    className='bg-[#e8f0fe] rounded-[4px] border h-[45px] p-[10px]'
+                                    className='rounded-[4px] border h-[45px] p-[10px]'
                                 />
                             </div>
                         </div>
 
-                        <button type='submit' className='bg-[#3961fb] rounded-[5px] border h-[45px] w-full text-white font-bold'>Đăng nhập</button>
+                        <button type='submit' className='bg-[#2b2e4a] rounded-[5px] border h-[45px] w-full text-white font-bold'>Đăng nhập</button>
 
                         <div className='flex justify-between'>
-                            <a className='text-[#fff] hover:text-[#f60] cursor-pointer'>
+                            <a className='text-black hover:text-[#f60] cursor-pointer'>
                                 Bạn quên mật khẩu?
                             </a>
 
-                            <a href='/login2' className='text-[#fff] hover:text-[#f60] cursor-pointer'>
+                            <a href='/login2' className='text-black hover:text-[#f60] cursor-pointer'>
                                 Tạo tài khoản mới
                             </a>
                         </div>
                     </form>
                 </div>
             </div>
+            <Footer/>
         </div>
 
     )

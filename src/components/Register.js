@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Header from './Header'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios';
-function Login2() {
-    const [usename, setUsername] = useState('');
-    const [phone, setPhone] = useState('');
-    const [password, setPassword] = useState('');
+import Footer from './Footer';
+function Register() {
+   
     const navigate = useNavigate();
+
 
     const postData = async (data) => {
         const response = await axios.post(
@@ -32,78 +32,97 @@ function Login2() {
             confirmpassword: event.target.confirmpassword.value,
         }
 
-        if (data.password === data.confirmpassword) {
-            postData(data)
-            alert("Tạo khoản thành công")
-            navigate('/login')
-        } else {
-            alert("Tạo khoản không thành công")
 
+        if (data.password !== data.confirmpassword) {
+            alert('Nhập lại mật khẩu sai')
+            return;
         }
 
+        let truePhone = false;
+
+
+        axios
+            .get('http://localhost:8000/user')
+            .then((response) => {
+                response.data.forEach((checkPhone) => {
+                    const phoneNumber = checkPhone.phone;
+                    if (data.phone === phoneNumber) {
+                        truePhone = false;
+                    } else {
+                        truePhone = true;
+                    }
+                });
+                if (truePhone) {
+                    postData(data)
+                    alert('Tạo tài khoản thành công')
+                    navigate('/login')
+                } else {
+                    alert('Số điện thoại đã tồn tại');
+                }
+            })
+            .catch((error) => {
+                console.error("Lỗi khi gửi yêu cầu GET ", error);
+            });
     }
     return (
         <div>
             <Header />
-            <div className='register h-screen'>
-            <div className='flex justify-center items-center pt-[180px]'>
-                <form className='border border-[#dedede] w-[600px] p-[30px_30px_100px] flex flex-col gap-3 bg-register' onSubmit={onSubmit}>
-                    <h1 className='text-[32px] font-bold text-white text-center'>Đăng Kí</h1>
-                    <div className='flex flex-col gap-5'>
-                        <div className='w-full flex flex-col'>
-                            <input 
-                                required
-                                placeholder='TÊN ĐĂNG NHẬP'  
-                                value={usename.usename} 
-                                type={'text'} 
-                                name='username' 
-                                className='bg-[#e8f0fe] rounded-[4px] border h-[45px] p-[10px]' />
+            <div className=''>
+                <div className='flex justify-center items-center pt-[30px] pb-[30px]'>
+                    <form className='border border-[#dedede] w-[600px] p-[30px_30px_50px] flex flex-col gap-3 bg-register' onSubmit={onSubmit}>
+                        <h1 className='text-[32px] font-bold text-center'>Đăng Kí</h1>
+                        <div className='flex flex-col gap-5'>
+                            <div className='w-full flex flex-col gap-3'>
+                                <label>Tên đăng nhập</label>
+                                <input
+                                    required                                 
+                                    type={'text'}
+                                    name='username'
+                                    className=' rounded-[4px] border h-[45px] p-[10px]' />
+                            </div>
+                            <div className='w-full flex flex-col gap-3'>
+                            <label>Số điện thoại</label>
+                                <input
+                                    required                                 
+                                    type={'number'}
+                                    name='phone'
+                                    className='rounded-[4px] border h-[45px] p-[10px]' />
+                            </div>
+                            <div className='w-full flex flex-col gap-3'>
+                                <label>Mật khẩu</label>
+                                <input
+                                    required
+                                    type={'password'}
+                                    name='password'
+                                    className='rounded-[4px] border h-[45px] p-[10px]' />
+                            </div>
+                            <div className='w-full flex flex-col gap-3'>
+                            <label>Nhập mật khẩu</label>                             
+                               <input
+                                    required                                 
+                                    type={'password'}
+                                    name='confirmpassword'
+                                    className='rounded-[4px] border h-[45px] p-[10px]' />
+                            </div>
                         </div>
-                        <div className='w-full flex flex-col'>
-                            <input
-                                required
-                                placeholder='SỐ ĐIỆN THOẠI' 
-                                value={phone.phone} 
-                                type={'number'} 
-                                name='phone' 
-                                className='bg-[#e8f0fe] rounded-[4px] border h-[45px] p-[10px]' />
-                        </div>
-                        <div className='w-full flex flex-col'>
-                            <input 
-                                required
-                                placeholder='MẬT KHẨU'
-                                value={password.password} 
-                                type={'password'} 
-                                name='password' 
-                                className='bg-[#e8f0fe] rounded-[4px] border h-[45px] p-[10px]' />
-                        </div>
-                        <div className='w-full flex flex-col'>
-                            <input 
-                                required
-                                placeholder='NHẬP LẠI MẬT KHẨU'
-                                value={password.password} 
-                                type={'password'}
-                                name='confirmpassword' 
-                                className='bg-[#e8f0fe] rounded-[4px] border h-[45px] p-[10px]' />
-                        </div>
-                    </div>
 
-                    <button className='bg-[#3961fb] rounded-[5px] border h-[45px] w-full text-white font-bold'>Tạo tài khoản</button>
+                        <button className='bg-[#2b2e4a] rounded-[5px] border h-[45px] w-full text-white font-bold'>Tạo tài khoản</button>
 
-                    <div className='flex gap-1'>
-                        <p className='text-white'>
-                            Bạn đã có tài khoản?
-                        </p>
+                        <div className='flex gap-1'>
+                            <p className=''>
+                                Bạn đã có tài khoản?
+                            </p>
 
-                        <a href='/login' className='text-[#1266dd] hover:text-[#f60] cursor-pointer'>
-                            Đăng nhập ngay
-                        </a>
-                    </div>
-                </form>
+                            <a href='/login' className='text-[#1266dd] hover:text-[#f60] cursor-pointer'>
+                                Đăng nhập ngay
+                            </a>
+                        </div>
+                    </form>
+                </div>
             </div>
-            </div>
+            <Footer/>
         </div>
 
     )
 }
-export default Login2
+export default Register

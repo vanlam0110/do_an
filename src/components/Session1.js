@@ -19,7 +19,7 @@ export default function Session1() {
   return (
     <div className=''>
         {/* <Slider {...settings}> */}
-          <div className='mt-[65px]'>
+          <div className=''>
             <img className='w-screen' src='/image/paner.png'/>
           </div>
           {/* <div className=''>

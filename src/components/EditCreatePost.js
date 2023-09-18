@@ -11,7 +11,7 @@ function EditCreatePost() {
     const [baseImage, setBaseImage] = useState("");
     const { id } = useParams();
     const [imageChanged, setImageChanged] = useState(false);
-    const [option, setOption] = useState("");
+    // const [option, setOption] = useState("");
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
     const [type, setType] = useState("");
@@ -137,6 +137,7 @@ function EditCreatePost() {
     //     { id: 6, value: "Xe Otô 7 Chỗ", name: "Xe Otô 7 Chỗ" },
     // ]
 
+
     // const handleRenderOptionList = () => {
     //     return options?.map((item) => {
     //         return (
@@ -176,7 +177,7 @@ function EditCreatePost() {
 
         <div>
             <Header />
-            <form className='mt-[120px]'>
+            <form className=''>
                 <div className='border-b-[1px]'>
                     <h1 className='text-[30px] font-medium  p-[20px_50px]'>
                         Cập nhật bài đăng 
