@@ -29,6 +29,7 @@ export default function Footer() {
                         <a><AiFillMail size={25} /></a>
                     </div>
                 </div>
+                <div className=' flex gap-10'>
                 <div className='flex flex-col gap-2 w-[150px] footer_responsive2'>
                     <h1 className='text-white pb-[20px] border-b border-b-[#e84545]'>MENU</h1>
                     <div className='flex items-center gap-3 text-[#a4a4a4] '>
@@ -62,6 +63,7 @@ export default function Footer() {
                         <i><AiFillCaretRight /></i>
                         <p>Thuê xe otô</p>
                     </div>
+                </div>
                 </div>
                 <div className='flex flex-col gap-2 w-[300px] lien_he footer_responsive2'>
                     <h1 className='text-white pb-[20px] border-b border-b-[#e84545]'>Liên hệ</h1>

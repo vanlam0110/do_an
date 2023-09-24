@@ -16,7 +16,6 @@ function Header() {
     const handleLogout = () => {
         setState({ phone: '', password: '', username: '' });
         window.localStorage.removeItem('username')
-        window.localStorage.removeItem('isLogin')
         // navigate('/')
         window.location.href='/';
     }
@@ -46,9 +45,9 @@ function Header() {
                 <div className='flex gap-2 items-center justify-center h-full '>
                     {state?.username ? (
                         <div className='flex gap-5 h-full items-center'>
-                            <div className='quanly relative hover:cursor-pointer border rounded  w-full h-[40px] flex items-center justify-center p-[20px]'>
-                                <p className='text-[#fff]'>{state.username}</p>
-                                <div className='con w-full mt-[85px]'>
+                            <div className='quanly relative hover:cursor-pointer h-[40px] flex items-center justify-center p-[20px]'>
+                                <p className='text-[#fff] border-b-[1px]'>{state.username}</p>
+                                <div className='con w-[190px] mt-[85px]'>
                                     <Link to={'/post-management'}>
                                         <p className='flex items-center justify-center gap-2 text-black'> <AiFillEdit /> Quản lý bài đăng</p>
                                     </Link>
@@ -60,13 +59,13 @@ function Header() {
                             </div>
                             <button
 
-                                className='bg-[#3961fb] text-white w-full h-[40px] rounded flex items-center justify-center gap-1 p-[20px]'
+                                className='bg-[#3961fb] text-white w-[135px] h-[40px] rounded flex items-center justify-center gap-1 p-[20px]'
                                 onClick={handleLogout}>
                                 <BiLogOut size={20} />
                                 Đăng xuất
                             </button>
                             <Link to="/createpost">
-                                <button className='bg-[#f73859] text-white w-[120px] h-[40px] rounded flex items-center justify-center gap-1'><IoAddCircleOutline size={20} />Đăng tin</button>
+                                <button className='bg-[#e84545] text-white w-[120px] h-[40px] rounded flex items-center justify-center gap-1'><IoAddCircleOutline size={20} />Đăng tin</button>
                             </Link>
                         </div>
                     ) : (

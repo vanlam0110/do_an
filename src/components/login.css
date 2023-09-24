@@ -184,9 +184,7 @@ input:checked + .slider:before {
 
 .title_main h1 span {
 	position: relative;
-    display: inline-block;
     vertical-align: top;
-    padding: 0 30px;
 }
 .footer{
 	background-image: url(/public/image/bg-footer.jpg);
@@ -196,3 +194,25 @@ input:checked + .slider:before {
 .hidden-row {
     display: none;
 }
+
+.session{
+	background-image: url(/public/image/paner.png);
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+}
+
+.slide-container {
+	display: flex;
+	overflow-x: scroll; /* Cho phép cuộn ngang khi nội dung vượt quá khung */
+	scroll-behavior: smooth; /* Tạo hiệu ứng cuộn mượt */
+	transition: transform 0.3s ease; /* Thời gian và kiểu chuyển đổi có thể thay đổi tùy ý */
+  }
+  
+  .slide-item {
+	flex: 0 0 auto;
+	width: 100%;
+	padding: 10px;
+	box-sizing: border-box;
+	display: inline-block; /* Hiển thị các phần tử cạnh nhau */
+  }

@@ -2,8 +2,9 @@ import React, { useEffect, useState, useContext } from 'react'
 import Header from './Header'
 import { TbCameraUp } from 'react-icons/tb'
 import axios from 'axios';
-import { useParams } from "react-router-dom";
+import { useParams  } from "react-router-dom";
 import { Context } from '../context/Context';
+import { useNavigate } from 'react-router-dom'
 
 function EditCreatePost() {
     const { listCar } = useContext(Context)
@@ -14,39 +15,17 @@ function EditCreatePost() {
     // const [option, setOption] = useState("");
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
-    const [type, setType] = useState("");
     const [price, setPrice] = useState("");
     const [username, setUsername] = useState("");
     const [phone, setPhone] = useState("");
-
+    const navigate = useNavigate();
     const object = listCar.find((item) => item.id == id);
- 
-    const handleTitle = (event) => {
-        setTitle(event.target.value);
-    };
-
-    const handleContent = (event) => {
-        setContent(event.target.value);
-    };
-
-    const handleType = (event) => {
-        setType(event.target.value);
-    }
-
-    const handleUsername = (event) => {
-        setUsername(event.target.value);
-    };
-
-    const handlePhone = (event) => {
-        setPhone(event.target.value);
-    };
-
-    const handlePrice = (event) => {
-        setPrice(event.target.value);
-    }
+    const initialType = object ? object.type : "";
+    const [type, setType] = useState(initialType);
+    
     useEffect(() => {
         const fetchData = async () => {
-          // Sử dụng promises để đọc giá trị title và content từ obj
+          // Sử dụng promises để đọc giá trị  từ obj
           const titlePromise = new Promise((resolve) => {
             resolve(object ? object.title : "");
           });
@@ -76,7 +55,7 @@ function EditCreatePost() {
             pricePromise
           ]);
     
-          // Cập nhật state title và content sau khi promises đã hoàn thành
+          // Cập nhật state sau khi promises đã hoàn thành
           setTitle(titleValue);
           setContent(contentValue);
           setUsername(usenameValue);
@@ -90,7 +69,7 @@ function EditCreatePost() {
         try {
           // Khi đã chọn ảnh mới thì lấy ảnh mới up lên nếu không thì vẫn giữ ảnh cũ và dữ liệu cũ
           if (imageChanged) {
-            const response = await axios.put(
+            const response = await axios.patch(
               `http://localhost:8000/car/${id}`,
               {
                 title: title,
@@ -100,11 +79,12 @@ function EditCreatePost() {
                 phone: phone,
                 price: price,
                 image: baseImage,
+                display: 1,
               }
-            );
-            alert("cập nhật thành công");
+            );              
+
           } else {
-            const response = await axios.put(
+            const response = await axios.patch(
               `http://localhost:8000/car/${id}`,
               {
                 title: title,
@@ -114,17 +94,46 @@ function EditCreatePost() {
                 phone: phone,
                 price: price,
                 image: object.image,
+                display: 1,
               }
             );
-            alert("Cập nhật thành công");
+            
+            
           }
         } catch (error) {
           console.error("Lỗi khi cập nhật dữ liệu:", error);
         }
       };
     
-      const handleClick = () => {
+      const handleClick = () => {  
+        if (!title) {
+          alert("Bạn chưa điền tiêu đề");
+          return
+      }
+      if (!type) {
+          alert("Bạn chưa chọn loại xe");
+          return
+      }
+      if (!content) {
+          alert("Bạn chưa điền nội dung");
+          return
+      }
+      if (!username) {
+          alert("Bạn chưa điền họ tên");
+          return
+      }
+      if (!phone) {
+          alert("Bạn chưa điền số điện thoại");
+          return
+      }
+      if (!price) {
+          alert("Bạn chưa điền giá cho thuê");
+          return
+      }
         updateData();
+        alert("Cập nhật thành công");  
+        navigate('/post-management');
+        window.location.reload();
       };
 
 
@@ -156,6 +165,7 @@ function EditCreatePost() {
         const base64 = await convertBase64(file);
         setBaseImage(base64);
         setImageChanged(true);
+        
     };
 
     const convertBase64 = (file) => {
@@ -190,14 +200,19 @@ function EditCreatePost() {
                         <input
                             required
                             
-                            onChange={handleTitle}
+                            onChange={(e) => setTitle(e.target.value)}
                             name='title'
                             defaultValue={object?.title ? object.title : ""}
                             className='rounded-[4px] border h-[40px] w-1/4 p-[10px]' />
                     </div>
                     <div className='flex flex-col gap-2 '>
                         <label className='font-bold'>Chọn Loại xe</label>
-                        <select onChange={handleType} value={type} className='rounded-[4px] border h-[40px] w-1/4 pl-[10px]' name='type'>
+                        <select 
+                            
+                            onChange={(e) => setType(e.target.value)} 
+                            value={type} 
+                            className='rounded-[4px] border h-[40px] w-1/4 pl-[10px]' 
+                            name='type'>
                             <option value={'1'}>Chọn Loại Xe</option>
                             <option value={'Xe Số'}>Xe SỐ</option>
                             <option value={'Xe Ga'}>Xe Ga</option>
@@ -210,7 +225,7 @@ function EditCreatePost() {
                     <div className='flex flex-col gap-2 '>
                         <label className='font-bold'>Nội dung mô tả</label>
                         <input
-                            onChange={handleContent}
+                            onChange={(e) => setContent(e.target.value)}
                             defaultValue={object?.content ? object.content : ""}
                             name='content'
                             className='rounded-[4px] border h-[140px] w-3/4 p-[10px]'/>
@@ -220,7 +235,7 @@ function EditCreatePost() {
                         <label className='font-bold'>Họ tên người cho thuê</label>
                         <input
 
-                            onChange={handleUsername}
+                            onChange={(e) => setUsername(e.target.value)}
                             defaultValue={object?.username ? object.username : ""}
                             name='usename'
                             className='rounded-[4px] border h-[40px] w-1/4 p-[10px]' />
@@ -229,7 +244,7 @@ function EditCreatePost() {
                     <div className='flex flex-col gap-2'>
                         <label className='font-bold'>Số điện thoại</label>
                         <input
-                            onChange={handlePhone}
+                            onChange={(e) => setPhone(e.target.value)}
                             defaultValue={object?.phone ? object.phone : ""}
                             name='phone'
                             className='rounded-[4px] border h-[40px] w-1/4 p-[10px]' />
@@ -239,7 +254,7 @@ function EditCreatePost() {
                         <label className='font-bold'>Giá cho thuê</label>
                         <input
 
-                            onChange={handlePrice}
+                            onChange={(e) => setPrice(e.target.value)}
                             defaultValue={object?.price ? object.price : ""}
                             name='price'
                             className='rounded-[4px] border h-[40px] w-1/4 p-[10px]' />
@@ -258,16 +273,13 @@ function EditCreatePost() {
                             <div className='w-full'>
                                 <h3 className='font-medium py-4'>Ảnh đã chọn</h3>
                             </div>
-                            {object ? (
-                                <img className="flex-1 w-44" src={object.image} alt="" />
-                            ) : (
-                                <p>No Image</p>
-                            )}
-                            {baseImage && (
-                                <div className=''>
-                                    <img src={baseImage} className="w-64 "></img>
-                                </div>
-                            )}
+                            {object && (
+  <img
+    className='w-64'
+    src={baseImage || object.image}
+    alt=''
+  />
+)}
                             <input onChange={uploadImage} hidden type={'file'} id='file' />
 
                         </div>

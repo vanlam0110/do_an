@@ -10,7 +10,10 @@ import Footer from './Footer';
 function Login() {
     const { list, setList } = useContext(HomeContext);
     const navigate = useNavigate();
-    const { state, setState } = useContext(AuthContext);
+    const { state, setState} = useContext(AuthContext);
+    const [ username, setUsername ] = useState('');
+    const [ phone, setPhone ] = useState('');
+    const [ password, setPassword ] = useState('');
 
     const getData = async () => {     
         const response = await axios.get(
@@ -21,21 +24,19 @@ function Login() {
             setList(response.data);
         }
     };
+    
+    
 
     const handleSubmit = (event) => {
-        event.preventDefault();
-        const data = {
-            username: event.target.username.value,
-            password: event.target.password.value,
-        };
+        event.preventDefault();      
 
-        const foundUser = list.find(user => user.username === data.username && user.password === data.password);
-
+        const foundUser = list.find(user => user.phone === phone && user.password === password  );
+        console.log(foundUser);
 
         if (foundUser) {
             alert('Đăng nhập thành công')
-            window.localStorage.setItem('username', data.username);    
-            localStorage.setItem("isLogin", data.username);   
+            window.localStorage.setItem('username', foundUser.username);    
+            localStorage.setItem("isLogin", foundUser.username);   
             navigate('/')
             setState(foundUser);
         } else {
@@ -49,17 +50,18 @@ function Login() {
     return (
         <div className=''>
             <Header />
-            <div className='login '>
+            <div className=' '>
                 <div className='flex justify-center items-center pt-[30px] pb-[30px]'>
                     <form onSubmit={handleSubmit} className='border border-[#dedede] w-[600px] p-[30px_30px_100px] flex flex-col gap-3 bg-login'>
                         <h1 className='text-[32px] font-bold text-center'>Đăng nhập</h1>
                         <div className='flex flex-col gap-5'>
                             <div className='w-full flex flex-col gap-3'>
-                                <label>Tên đăng nhập</label>
+                                <label>Số điện thoại</label>
                                 <input
                                     required
-                                    type={'text'}
-                                    name='username'
+                                    type={'number'}
+                                    name='phone'
+                                    onChange={(e) => setPhone(e.target.value)}
                                     className='rounded-[4px] border h-[45px] p-[10px]'
                                 />
                             </div>
@@ -69,6 +71,8 @@ function Login() {
                                     required
                                     type={'password'}
                                     name="password"
+                                    onChange={(e) => setPassword(e.target.value)}
+
                                     className='rounded-[4px] border h-[45px] p-[10px]'
                                 />
                             </div>

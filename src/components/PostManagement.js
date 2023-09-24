@@ -9,21 +9,33 @@ import { useNavigate } from 'react-router-dom';
 function Post_management() {
   const { list, setList } = useContext(HomeContext);
   const navigate = useNavigate();
-
+  const [toggleStatus, setToggleStatus] = useState({});
+  
   const getData = async () => {
     const response = await axios.get('http://localhost:8000/car');
     if (response.status === 200) {
       setList(response.data);
+      const initialToggleStatus = {};
+      response.data.forEach((item) => {
+        initialToggleStatus[item.id] = item.display === 1;
+      });
+      setToggleStatus(initialToggleStatus);
     }
   };
 
-  const handleToggleDisplay = async (id) => {
+  const handleToggleSwitch = async (id) => {
+    // Đảo ngược trạng thái hiển thị của mục
+    const status = toggleStatus[id] ? 0 : 1;
     const response = await axios.patch(`http://localhost:8000/car/${id}`, {
-      display: list.find((item) => item.id === id).display === 1 ? 0 : 1,
+      display: status,
     });
 
     if (response.status === 200) {
-      // Cập nhật danh sách sau khi thay đổi trạng thái
+      // Cập nhật trạng thái và danh sách sau khi thay đổi
+      setToggleStatus((prevStatus) => ({
+        ...prevStatus,
+        [id]: status,
+      }));
       getData();
     }
   };
@@ -55,7 +67,7 @@ function Post_management() {
                   <th>Họ tên người cho thuê</th>
                   <th>Số điện thoại</th>
                   <th>Giá</th>
-                  <th>Trạng thái</th>
+                  <th>Trạng thái hoạt động</th>
                 </tr>
               </thead>
               <tbody>
@@ -76,25 +88,17 @@ function Post_management() {
                     <th>{item.price}</th>
                     <th>
                       <div className="flex gap-5 w-full">
+                        <label className="switch">
+                          <input
+                            type="checkbox"
+                            checked={toggleStatus[item.id]}
+                            onChange={() => handleToggleSwitch(item.id)}
+                          />
+                          <span className="slider round"></span>
+                        </label>
                         <button
-                          className={`border bg-red-600 w-[100px] flex items-center justify-center text-white rounded ${
-                            item.display === 0 ? 'hidden' : ''
-                          }`}
-                          onClick={() => handleToggleDisplay(item.id)}
-                        >
-                          Ẩn tin
-                        </button>
-                        <button
-                          className={`border bg-green-600 w-[100px] flex items-center justify-center text-white rounded ${
-                            item.display === 1 ? 'hidden' : ''
-                          }`}
-                          onClick={() => handleToggleDisplay(item.id)}
-                        >
-                          Bật tin
-                        </button>
-                        <button
+                          className="border bg-green-600 w-[100px] flex items-center justify-center text-white rounded"
                           onClick={() => handleEdit(item.id)}
-                          className="border bg-[#3961fb] w-[100px] flex items-center justify-center text-white rounded"
                         >
                           <AiFillEdit /> Sửa
                         </button>

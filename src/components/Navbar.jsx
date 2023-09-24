@@ -39,14 +39,14 @@ function Navbar() {
 				<li className="nav__item">
 					<a className="nav__link">
 						<div className="border rounded w-full h-[40px] flex items-center justify-center p-[20px]">
-							<p className="text-[#fff]">{state.username}</p>
+							<p className="text-[#fff] font-nav">{state.username}</p>
 						</div>
 					</a>
 				</li>
 				<li className="nav__item">
 					<a className="nav__link">
 						<Link to={'/post-management'}>
-							<p className="flex items-center justify-center gap-2">
+							<p className="flex items-center justify-center gap-2 font-nav">
 								<AiFillEdit /> Quản lý bài đăng
 							</p>
 						</Link>
@@ -55,7 +55,7 @@ function Navbar() {
 				<li className="nav__item">
 					<a className="nav__link">
 						<Link to={'/edituser'}>
-							<p className="flex items-center justify-center gap-2">
+							<p className="flex items-center justify-center gap-2 font-nav">
 								<BiUserCircle /> Thông tin cá nhân
 							</p>
 						</Link>
@@ -63,8 +63,8 @@ function Navbar() {
 				</li>
 				<li className="nav__item">
 					<a className="nav__link">
-          <button
-							className="bg-[#3961fb] text-white w-full h-[40px] rounded flex items-center justify-center gap-1 p-[20px]"
+						<button
+							className="bg-[#3961fb] text-white w-full h-[40px] rounded flex items-center justify-center gap-1 p-[20px] font-nav"
 							onClick={handleLogout}
 						>
 							<BiLogOut size={20} />
@@ -73,9 +73,9 @@ function Navbar() {
 					</a>
 				</li>
 				<li className="nav__item">
-					<a  className="nav__link">
-          <Link to="/createpost">
-							<button className="bg-[#f73859] text-white w-[120px] h-[40px] rounded flex items-center justify-center gap-1">
+					<a className="nav__link">
+						<Link to="/createpost">
+							<button className="bg-[#e84545] text-white w-[120px] h-[40px] rounded flex items-center justify-center gap-1 font-nav">
 								<IoAddCircleOutline size={20} />
 								Đăng tin
 							</button>
@@ -83,15 +83,15 @@ function Navbar() {
 					</a>
 				</li>
 			</ul>
-			
+
 			<div className="flex gap-2 items-center justify-center h-full ">
 				{state?.username ? (
 					<div className="flex gap-5 h-full items-center">
 						<div onClick={navToggle} className={icon}>
-				<div className="line1"></div>
-				<div className="line2"></div>
-				<div className="line3"></div>
-			</div>			
+							<div className="line1"></div>
+							<div className="line2"></div>
+							<div className="line3"></div>
+						</div>
 					</div>
 				) : (
 					<Link to="/login">

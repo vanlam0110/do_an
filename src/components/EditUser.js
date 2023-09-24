@@ -4,10 +4,10 @@ import axios from 'axios';
 
 function EditUser() {
   const [listUser, setListUser] = useState([]);
-  const [username, setUsername] = useState ('');
-  const [phone, setPhone] = useState ('');
-  const [password, setPassword] = useState ('');
-  const isLogin = localStorage.getItem('isLogin');
+  const [username, setUsername] = useState('');
+  const [phone, setPhone] = useState('');
+  const [password, setPassword] = useState('');
+  const isLogin = localStorage.getItem('username');
 
   const getData = async () => {
     try {
@@ -25,57 +25,52 @@ function EditUser() {
   const object = listUser.find((item) => item.username === isLogin);
 
   const handleUpdateAccount = async () => {
-    localStorage.setItem('isLogin',username);
-    localStorage.setItem('username',username);
+    // Kiểm tra xem các biến username, phone, và password có giá trị hợp lệ hay không.
+    if (!username) {
+      alert("Bạn chưa điền tên hiển thị");
+      return;
+    }
+    if (!phone) {
+      alert("Bạn chưa điền số điện thoại");
+      return;
+    }
+    if (!password) {
+      alert("Bạn chưa điền mật khẩu");
+      return;
+    }
+
+    // Nếu thông tin hợp lệ, thực hiện cập nhật và lưu vào localStorage.
+    localStorage.setItem('username', username);
     alert('Cập nhật thành công');
 
+    try {
       const response = await axios.patch(
         `http://localhost:8000/user/${object.id}`,
-       {
-        username: username,
-        phone: phone,
-        password: password,
-       }
-       );
+        {
+          username: username,
+          phone: phone,
+          password: password,
+        }
+      );
+      // Xử lý response từ server nếu cần.
+    } catch (error) {
+      console.error('Lỗi khi cập nhật người dùng:', error);
+    }
   };
 
   useEffect(() => {
     getData();
   }, []);
+
   useEffect(() => {
-    const fetchData = async () => {
-      // Sử dụng promises để đọc giá trị title và content từ obj
-  
-      const usernamePromise = new Promise((resolve) => {
-        resolve(object ? object.username : "");
-      });
-
-      const phonePromise = new Promise((resolve) => {
-        resolve(object ? object.phone : "");
-      });
-
-      const passwordPromise = new Promise((resolve) => {
-        resolve(object ? object.password : "");
-      });
-
-      // Chờ tất cả promises hoàn thành
-      const [usenameValue, phoneValue, passwordValue] = await Promise.all([
-        usernamePromise,
-        phonePromise,
-        passwordPromise
-      ]);
-
-      // Cập nhật state title và content sau khi promises đã hoàn thành
-      setUsername(usenameValue);
-      setPhone(phoneValue);
-      setPassword(passwordValue);
-    };
-
-    fetchData();
+    // Nếu object không tồn tại, không cần thực hiện gán giá trị mặc định.
+    if (object) {
+      setUsername(object.username);
+      setPhone(object.phone);
+      setPassword(object.password);
+    }
   }, [object]);
-  // object?.console.log(object.username)
-  // console.log(object.username);
-  // console.log(object.username);
+
   return (
     <div>
       <Header />
@@ -85,52 +80,36 @@ function EditUser() {
             <h1 className='text-[32px] font-bold text-center'>
               Cập nhật thông tin cá nhân
             </h1>
-            <div className='flex flex-col gap-5'>
+            <div className='flex flex-col gap-5 pb-[20px]'>
               <div className='w-full flex gap-5 items-center'>
-                <label className=''>Tên tài khoản</label>
+                <label className=''>Tên hiển thị</label>
                 <input
-                  className='bg-[#e8f0fe] rounded-[4px] border h-[45px] p-[10px] w-[400px]'
-                  defaultValue={object?.username ? object.username : ''}
-                  onChange={(e) =>
-                    setUsername(
-                      
-                       e.target.value
-                    )
-                  }
+                  required
+                  className='bg-[#e8f0fe] rounded-[4px] border h-[45px] p-[10px] w-[400px] ml-[12px]'
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
                 />
               </div>
               <div className='w-full flex gap-5'>
                 <label className='mt-[10px]'>Số điện thoại</label>
                 <div className='flex flex-col gap-3'>
                   <input
+                    required
                     className='bg-[#e8f0fe] rounded-[4px] border h-[45px] p-[10px] w-[400px]'
-                    defaultValue={object?.phone ? object.phone : ''}
-                    onChange={(e) =>
-                      setPhone(
-                        
-                         e.target.value
-                      )
-                    }
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
                   />
-                  
-                  <a className='text-[#007bff]'>Đổi số điện thoại</a>
                 </div>
               </div>
               <div className='w-full flex gap-5'>
                 <label className='mt-[10px]'>Mật khẩu</label>
                 <div className='flex flex-col gap-3 ml-[25px]'>
                   <input
+                    required
                     className='bg-[#e8f0fe] rounded-[4px] border h-[45px] p-[10px] w-[400px]'
-                    type='password'
-                    defaultValue={object?.password ? object.password : ''}
-                    onChange={(e) =>
-                      setPassword(
-                        
-                         e.target.value
-                      )
-                    }
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                   />
-                  <a className='text-[#007bff]'>Đổi mật khẩu</a>
                 </div>
               </div>
             </div>

@@ -16,9 +16,7 @@ function Createpost() {
 
     const postData = async (event) => {
         event.preventDefault();
-        if (!title || !type || !content || !username || !phone || !price){
-            alert('Bạn chưa điền các thông tin')
-        }
+        
         if (!title) {
             alert("Bạn chưa điền tiêu đề");
             return
@@ -43,6 +41,10 @@ function Createpost() {
             alert("Bạn chưa điền giá cho thuê");
             return
         }
+        if (!baseImage){
+            alert('Bạn chưa chọn ảnh')
+            return
+        }
         const response = await axios.post(
             'http://localhost:8000/car',
             {
@@ -62,39 +64,6 @@ function Createpost() {
             navigate('/')
         }
     }
-
-    const handleTitle = (event) => {
-        setTitle(event.target.value);
-        event.preventDefault();
-    };
-
-    const handleType = (event) => {
-        setType(event.target.value);
-        event.preventDefault();
-
-    };
-
-    const handleContent = (event) => {
-        setContent(event.target.value);
-        event.preventDefault();
-    };
-
-    const handleUsername = (event) => {
-        setUsername(event.target.value);
-        event.preventDefault();
-    };
-
-    const handlePhone = (event) => {
-        setPhone(event.target.value);
-        event.preventDefault();
-    };
-
-    const handlePrice = (event) => {
-        setPrice(event.target.value);
-        event.preventDefault();
-    }
-
-
     const uploadImage = async (e) => {
         const file = e.target.files[0];
         const base64 = await convertBase64(file);
@@ -133,13 +102,17 @@ function Createpost() {
                         <input
                             required
                             value={title}
-                            onChange={handleTitle}
+                            onChange={(e) => setTitle(e.target.value)}
                             name='title'
                             className='rounded-[4px] border h-[40px] w-1/4 p-[10px]' />
                     </div>
                     <div className='flex flex-col gap-2 '>
                         <label className='font-bold'>Chọn Loại xe</label>
-                        <select onChange={handleType} value={type} className='rounded-[4px] border h-[40px] w-1/4 pl-[10px]' name='type'>
+                        <select 
+                            onChange={(e) => setType(e.target.value)} 
+                            value={type} 
+                            className='rounded-[4px] border h-[40px] w-1/4 pl-[10px]' 
+                            name='type'>
                             <option value={'1'}>Chọn Loại Xe</option>
                             <option value={'Xe Số'}>Xe SỐ</option>
                             <option value={'Xe Ga'}>Xe Ga</option>
@@ -152,7 +125,7 @@ function Createpost() {
                     <div className='flex flex-col gap-2 '>
                         <label className='font-bold'>Nội dung mô tả</label>
                         <textarea
-                            onChange={handleContent}
+                            onChange={(e) => setContent(e.target.value)}
                             value={content}
                             name='content'
                             className='rounded-[4px] border h-[140px] w-3/4 p-[10px]'> </textarea>
@@ -162,7 +135,7 @@ function Createpost() {
                         <label className='font-bold'>Họ tên người cho thuê</label>
                         <input
                             value={username}
-                            onChange={handleUsername}
+                            onChange={(e) => setUsername(e.target.value)}
                             name='usename'
                             className='rounded-[4px] border h-[40px] w-1/4 p-[10px]' />
                     </div>
@@ -170,7 +143,7 @@ function Createpost() {
                     <div className='flex flex-col gap-2 '>
                         <label className='font-bold'>Số điện thoại</label>
                         <input
-                            onChange={handlePhone}
+                            onChange={(e) => setPhone(e.target.value)}
                             value={phone}
                             name='phone'
                             className='rounded-[4px] border h-[40px] w-1/4 p-[10px]' />
@@ -180,7 +153,7 @@ function Createpost() {
                         <label className='font-bold'>Giá cho thuê</label>
                         <input
                             value={price}
-                            onChange={handlePrice}
+                            onChange={(e) => setPrice(e.target.value)}
                             name='price'
                             className='rounded-[4px] border h-[40px] w-1/4 p-[10px]' />
                     </div>

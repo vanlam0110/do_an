@@ -73,7 +73,7 @@ function Register() {
                         <h1 className='text-[32px] font-bold text-center'>Đăng Kí</h1>
                         <div className='flex flex-col gap-5'>
                             <div className='w-full flex flex-col gap-3'>
-                                <label>Tên đăng nhập</label>
+                                <label>HỌ tên</label>
                                 <input
                                     required                                 
                                     type={'text'}
