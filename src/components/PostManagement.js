@@ -5,14 +5,29 @@ import axios from 'axios';
 import { HomeContext } from '../context/Homecontext';
 import { AiFillEdit } from 'react-icons/ai';
 import { useNavigate } from 'react-router-dom';
+import { AiOutlineSearch } from 'react-icons/ai'
+import { GrFormPrevious, GrFormNext } from 'react-icons/gr'
 
 function Post_management() {
   const { list, setList } = useContext(HomeContext);
   const navigate = useNavigate();
   const [toggleStatus, setToggleStatus] = useState({});
-  
+  const [search, setSearch] = useState("");
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const handlePageNext = () => {
+    setPage(page + 1);
+  }
+
+  const handlePagePrev = () => {
+    setPage(page - 1);
+  }
+  const limit = windowWidth < 1023 ? 3 : 4;
   const getData = async () => {
-    const response = await axios.get('http://localhost:8000/car');
+    const response = await axios.get(
+      `http://localhost:8000/car?_page=${page}&_limit=${limit}${search ? `&q=${search}` : ""}&_sort=id&_order=desc`
+    );
     if (response.status === 200) {
       setList(response.data);
       const initialToggleStatus = {};
@@ -20,7 +35,22 @@ function Post_management() {
         initialToggleStatus[item.id] = item.display === 1;
       });
       setToggleStatus(initialToggleStatus);
+
+      const totalCount = response.headers["x-total-count"];
+      const totalPages = Math.ceil(totalCount / limit);
+      setTotalPages(totalPages);
+      const dataWithPhone = response.data.map((item) => {
+        const phone = item.phone;
+        return {
+          ...item,
+          phone: phone,
+        };
+      });
+      setList(dataWithPhone);
     }
+  };
+  const handleSearchChange = (e) => {
+    setSearch(e.target.value);
   };
 
   const handleToggleSwitch = async (id) => {
@@ -46,14 +76,22 @@ function Post_management() {
 
   useEffect(() => {
     getData();
-  }, []);
-
+  }, [page, search, limit]);
+  const hasNextPage = list.length === limit;
   return (
     <div>
       <Header />
       <div className="">
-        <div className="border-b-[1px]">
+        <div className="border-b-[1px] flex">
           <h1 className="p-[20px] font-bold text-[20px]">Quản lý tin đăng</h1>
+          <div className='ml-[400px] flex items-center'>
+            <input
+              onChange={handleSearchChange}
+              className='border border-[#D1D1D1] rounded-[25px] w-[260px] h-[40px] p-[11px_47px_11px_5px] relative '
+              placeholder='Search'
+            />
+            <i className='absolute right-[665px] p-[10px] text-[#D1D1D1]'><AiOutlineSearch size={20} /></i>
+          </div>
         </div>
         <div className="">
           <div className="p-[20px]">
@@ -82,7 +120,7 @@ function Post_management() {
                     </th>
                     <th>{item.title}</th>
                     <th>{item.type}</th>
-                    <th>{item.content}</th>
+                    <th className='w-[400px]'>{item.content}</th>
                     <th>{item.username}</th>
                     <th>{item.phone}</th>
                     <th>{item.price}</th>
@@ -109,6 +147,23 @@ function Post_management() {
               </tbody>
             </table>
           </div>
+        </div>
+        <div className='flex justify-center gap-2 items-center pb-[20px]'>
+          <button
+            disabled={page === 1 ? true : false}
+            onClick={handlePagePrev}
+            className='border bg-[#e84545] p-[5px_20px] rounded-[10px] flex items-center justify-center text-white text-[15px]'
+          >
+            <i className=''><GrFormPrevious /></i> Prev
+          </button>
+          <p>{page}</p>
+          <button
+            disabled={!hasNextPage}
+            onClick={handlePageNext}
+            className='border bg-[#86DB06] p-[5px_20px] rounded-[10px] flex items-center justify-center text-white text-[15px]'
+          >
+            Next <i className=''><GrFormNext /></i>
+          </button>
         </div>
       </div>
     </div>

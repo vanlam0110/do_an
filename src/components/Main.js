@@ -96,19 +96,18 @@ function Main() {
                     <div className='flex gap-10 main-car'>
                         {result?.map((item) => {
                             return (
-                                <div className='flex'>
+                                <div className='flex '>
                                     <div className='border shadow-[0_5px_20px_rgba(0,0,0,.1)] rounded-[15px] w-[310px] main-responsive'>
                                         <div className='flex flex-col gap-5' key={item}>
                                             <img className='w-[310px] h-[200px] rounded-[15px_15px_0_0]' src={item.image} />
                                             <div className='flex flex-col gap-2  p-[0px_10px_10px_10px]'>
-                                                <h1 className='text-[#E13427] font-bold'>{item.title}</h1>
-                                                <div className='flex gap-5'>
-                                                    <p className='text-[#16c784] font-bold'>{item.price}</p>
-                                                    <p>{item.type}</p>
-                                                </div>
+                                                <h1 className='text-[#E13427] font-bold'>{item.title}</h1>                                    
+                                                    <p className='text-[#16c784] font-bold'>Giá: {item.price}</p>
+                                                    <p>Loại xe: {item.type}</p>
+                                                
                                                 <p className='text-[#8a8d91]'>{item.content}</p>
                                                 <div className='flex flex-col gap-5'>
-                                                    <p>{item.username}</p>
+                                                    <p>Người cho thuê: {item.username}</p>
                                                     <a className='border border-[#2B2E4A] bg-[#2B2E4A] text-white rounded p-[3px_7px]' href={`tel:${item.phone}`}>{item.phone}</a>                                                   
                                                     <a className='border border-[#2B2E4A] text-[#2B2E4A] rounded p-[3px_7px]' target={'_blank'} href={`https://zalo.me/${item.phone}`}>Nhắn zalo</a>
                                                 </div>

@@ -6,6 +6,10 @@
     .header_nav{
         display : none;
     }
+
+    .newreposive{
+      display: none;
+    }
 }
 *,
 *::after,
@@ -62,7 +66,7 @@ a {
   padding-bottom: 20px;
 }
 
-@media screen and (min-width: 768px) and (max-width: 1023px) {
+/* @media screen and (min-width: 768px) and (max-width: 1023px) {
     .nav_header{
         display : none ;
     }
@@ -137,7 +141,7 @@ a {
   .session-main{
     padding: 130px 0 0 100px !important;
   }
-}
+} */
 
 
 @media screen and (max-width: 767px) {
@@ -154,7 +158,7 @@ a {
 }
 .nav__menu {
   position: fixed;
-  top: 18vh;
+  top: 17vh;
   right: 0;
   width: 50vw;
   background: #2B2E4A;
@@ -177,7 +181,7 @@ a {
 }
 
 .footer{
-  height: 800px;
+  height: 530px;
 }
 
 .footer img{
@@ -185,11 +189,15 @@ a {
 }
 
 .lien_he{
-  margin-left: 0 !important;
+  margin-left: 130px !important;
 }
 
 .nav__brand img{
   width: 150px;
+}
+
+.footer_responsive{
+  flex-flow: row wrap;
 }
 
 .footer_responsive2 a, p{
@@ -226,6 +234,50 @@ a {
   padding: 80px 0 0 100px !important;
 }
 
+.main-car{
+  flex-direction: column;
+}
+
+.main-responsive h1{
+  font-size: 15px;
+}
+
+  .main-responsive p{
+    font-size: 15px;
+  }
+
+  .newreposive{
+    display: block;
+  }
+
+  .newreposive2{
+    display: none;
+  }
+
+  /* Thêm hiệu ứng chuyển slide
+.new-responsive-container {
+  display: flex;
+  overflow: hidden;
+  position: relative;
+}
+
+.new-responsive {
+  min-width: 350px;
+  transition: transform 0.5s ease-in-out;
+}
+
+/* Đặt vị trí của các slide dựa trên currentSlide */
+/* .new-responsive:nth-child(1) {
+  transform: translateX(calc(-100% * var(--currentSlide)));
+}
+.new-responsive:nth-child(2) {
+  transform: translateX(calc(-100% * var(--currentSlide - 1)));
+}
+.new-responsive:nth-child(3) {
+  transform: translateX(calc(-100% * var(--currentSlide - 2))); */ 
+/* } */
+
+
 }
 
 @media screen and (max-width: 376px) {
@@ -243,7 +295,7 @@ a {
 .nav__menu {
   position: fixed;
   top: 10vh;
-  right: 18px;
+  /* right: 17px; */
   width: 60vw;
   background: #2B2E4A;
   flex-direction: column;
@@ -257,7 +309,7 @@ a {
 }
 
 .nav__link button{
-  width: 100px;
+  width: 131px;
 }
 
 .title_main h1{
@@ -269,7 +321,7 @@ a {
   padding: 0px 10px 
 }
 .footer_responsive{
-  flex-direction: column;
+  flex-direction: column !important;
   gap: 20px;
   padding: 30px 0 20px 20px;
 }
@@ -295,6 +347,10 @@ a {
   font-size: 14px;
 }
 
+.lien_he{
+  margin-left: 0 !important;
+}
+
 .session-main h1{
   font-size: 18px;
 }
@@ -314,7 +370,7 @@ a {
 }
 
 .session{
-  background-size: 375px !important;
+  background-size: 376px !important;
   height: 185px !important;
 }
 
@@ -338,6 +394,14 @@ a {
   flex-direction: column;
 }
 
+.new-responsive{
+  width: 300px;
+}
+
+.new-content p{
+  font-size: 15px;
+}
+
 .lien_he{
   width: 320px;
 }
@@ -349,6 +413,27 @@ a {
 .lien_he textarea{
   width: 320px;
 }
+
+.main-responsive {
+  width: 265px;
+
+}
+
+.main-responsive h1{
+  font-size: 15px;
+}
+
+  .main-responsive p{
+    font-size: 15px;
+  }
+
+  .newreposive{
+    display: block;
+  }
+
+  .newreposive2{
+    display: none;
+  }
 }
 
 

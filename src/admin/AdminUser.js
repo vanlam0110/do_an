@@ -11,16 +11,40 @@ import { AiFillHome } from 'react-icons/ai'
 import { BiSolidUser } from 'react-icons/bi'
 import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
+import { GrFormPrevious, GrFormNext } from 'react-icons/gr'
 function AdminUser() {
     const { list, setList } = useContext(HomeContext);
     const [search, setSearch] = useState("");
     const navigate = useNavigate();
+    const [page, setPage] = useState(1);
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth); // State để theo dõi kích thước cửa sổ
+    const [totalPages, setTotalPages] = useState(1);
+    const handlePageNext = () => {
+        setPage(page + 1);
+    }
+
+    const handlePagePrev = () => {
+        setPage(page - 1);
+    }
+
+    const limit = windowWidth < 1023 ? 3 : 4;
     const getData = async () => {
         const response = await axios.get(
-            `http://localhost:8000/user?_${search ? `&q=${search}` : ""}&_sort=id&_order=desc`
+            `http://localhost:8000/user?_page=${page}&_limit=${limit}${search ? `&q=${search}` : ""}&_sort=id&_order=desc`
         );
         if (response.status === 200) {
-            setList(response.data)
+            setList(response.data);
+            const totalCount = response.headers["x-total-count"];
+            const totalPages = Math.ceil(totalCount / limit);
+            setTotalPages(totalPages);
+            const dataWithPhone = response.data.map((item) => {
+                const phone = item.phone;
+                return {
+                    ...item,
+                    phone: phone,
+                };
+            });
+            setList(dataWithPhone);
         }
     };
 
@@ -42,15 +66,16 @@ function AdminUser() {
             await getData();
         }
     }
-    
+
     const handleLogout = () => {
         navigate('/admin')
     }
 
-    
+
     useEffect(() => {
         getData()
-    }, [search])
+    }, [page, search, limit])
+    const hasNextPage = list.length === limit;
     return (
         <div className='bg-[#f5f5f9] h-screen'>
             <div className='flex h-screen'>
@@ -134,6 +159,23 @@ function AdminUser() {
                                     </tbody>
                                 ))}
                             </table>
+                        </div>
+                        <div className='flex justify-center gap-2 items-center pb-[20px]'>
+                            <button
+                                disabled={page === 1 ? true : false}
+                                onClick={handlePagePrev}
+                                className='border bg-[#e84545] p-[5px_20px] rounded-[10px] flex items-center justify-center text-white text-[15px]'
+                            >
+                                <i className=''><GrFormPrevious /></i> Prev
+                            </button>
+                            <p>{page}</p>
+                            <button
+                                disabled={!hasNextPage}
+                                onClick={handlePageNext}
+                                className='border bg-[#86DB06] p-[5px_20px] rounded-[10px] flex items-center justify-center text-white text-[15px]'
+                            >
+                                Next <i className=''><GrFormNext /></i>
+                            </button>
                         </div>
                     </div>
                 </div>

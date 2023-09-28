@@ -6,6 +6,7 @@ import { useParams  } from "react-router-dom";
 import { Context } from '../context/Context';
 import { useNavigate } from 'react-router-dom'
 
+
 function EditCreatePost() {
     const { listCar } = useContext(Context)
     console.log(listCar);
@@ -192,6 +193,8 @@ function EditCreatePost() {
                     <h1 className='text-[30px] font-medium  p-[20px_50px]'>
                         Cập nhật bài đăng 
                     </h1>
+
+
                 </div>
 
                 <div className=' flex flex-col p-[20px_50px] gap-5'>
@@ -217,18 +220,20 @@ function EditCreatePost() {
                             <option value={'Xe Số'}>Xe SỐ</option>
                             <option value={'Xe Ga'}>Xe Ga</option>
                             <option value={'Xe Tay côn'}>Xe Tay côn</option>
-                            <option value={'Xe Otô 4 Chỗ'}>Xe Otô 4 Chỗ</option>
+                            <option value={'Xe Otô 5 Chỗ'}>Xe Otô 5 Chỗ</option>
                             <option value={'Xe Otô 7 Chỗ'}>Xe Otô 7 Chỗ</option>
                         </select>
                     </div>
 
                     <div className='flex flex-col gap-2 '>
                         <label className='font-bold'>Nội dung mô tả</label>
-                        <input
-                            onChange={(e) => setContent(e.target.value)}
-                            defaultValue={object?.content ? object.content : ""}
-                            name='content'
-                            className='rounded-[4px] border h-[140px] w-3/4 p-[10px]'/>
+                        <textarea
+                         onChange={(e) => setContent(e.target.value)}
+                         defaultValue={object?.content ? object.content : ""}
+                         name='content'
+                         className='rounded-[4px] border h-[140px] w-3/4 p-[10px]'>
+                           
+                            </textarea>
                     </div>
 
                     <div className='flex flex-col gap-2'>

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Header from './Header';
 import axios from 'axios';
+import Footer from './Footer'
 
 function EditUser() {
   const [listUser, setListUser] = useState([]);
@@ -75,7 +76,7 @@ function EditUser() {
     <div>
       <Header />
       <div className=''>
-        <div className='flex justify-center items-center pt-[100px]'>
+        <div className='flex justify-center items-center pt-[50px] pb-[50px]'>
           <form className='border border-[#dedede] w-[600px] p-[30px_30px_100px] flex flex-col gap-3 bg-register'>
             <h1 className='text-[32px] font-bold text-center'>
               Cập nhật thông tin cá nhân
@@ -123,6 +124,7 @@ function EditUser() {
           </form>
         </div>
       </div>
+      <Footer/>
     </div>
   );
 }

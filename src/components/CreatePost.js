@@ -117,7 +117,7 @@ function Createpost() {
                             <option value={'Xe Số'}>Xe SỐ</option>
                             <option value={'Xe Ga'}>Xe Ga</option>
                             <option value={'Xe Tay côn'}>Xe Tay côn</option>
-                            <option value={'Xe Otô 4 Chỗ'}>Xe Otô 4 Chỗ</option>
+                            <option value={'Xe Otô 5 Chỗ'}>Xe Otô 5 Chỗ</option>
                             <option value={'Xe Otô 7 Chỗ'}>Xe Otô 7 Chỗ</option>
                         </select>
                     </div>
