@@ -9,6 +9,7 @@ import { BiLogOut } from 'react-icons/bi';
 import { AiFillEdit } from 'react-icons/ai';
 import { BiUserCircle } from 'react-icons/bi';
 import { useNavigate } from 'react-router-dom';
+import {RxDividerVertical} from 'react-icons/rx'
 function Navbar() {
 	const { state, setState } = useContext(AuthContext);
 	const navigate = useNavigate();
@@ -94,12 +95,15 @@ function Navbar() {
 						</div>
 					</div>
 				) : (
-					<Link to="/login">
-						<button className="bg-[#3961fb] text-white w-[120px] h-[40px] rounded flex items-center justify-center gap-1 ">
-							<BiLogIn size={20} />
-							Đăng nhập
-						</button>
-					</Link>
+					<div className='flex'>
+                            <Link to="/login">
+                            <button className='text-white'>Đăng nhập</button>
+                        </Link>
+                        <i className='text-white'><RxDividerVertical size={30}/></i>
+                        <Link to={'/login2'}>
+                        <button  className='text-white'>Đăng kí</button>
+                        </Link>
+                        </div>
 				)}
 			</div>
 		</nav>

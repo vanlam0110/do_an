@@ -52,7 +52,8 @@ function Login() {
             <Header />
             <div className=' '>
                 <div className='flex justify-center items-center pt-[30px] pb-[30px]'>
-                    <form onSubmit={handleSubmit} className='border border-[#dedede] w-[600px] p-[30px_30px_100px] flex flex-col gap-3 bg-login'>
+                    <form onSubmit={handleSubmit} 
+                    className='border border-[#dedede] w-[600px] p-[30px_30px_100px] flex flex-col gap-3 bg-login max-[376px]:w-[330px]'>
                         <h1 className='text-[32px] font-bold text-center'>Đăng nhập</h1>
                         <div className='flex flex-col gap-5'>
                             <div className='w-full flex flex-col gap-3'>

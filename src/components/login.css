@@ -1,3 +1,13 @@
+* {
+	box-sizing: border-box
+}
+
+.webkit {
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
+
 .login {
 	background-image: url(/public/image/bg-login.jpg);
 	background-size: cover;

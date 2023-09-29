@@ -18,34 +18,27 @@ function Admin() {
     const [search, setSearch] = useState("");
     const navigate = useNavigate();
     const [page, setPage] = useState(1);
-    const [windowWidth, setWindowWidth] = useState(window.innerWidth); // State để theo dõi kích thước cửa sổ
-    const [totalPages, setTotalPages] = useState(1);
+    const [maxPage, setMaxPage] = useState(1);
     const handlePageNext = () => {
-        setPage(page + 1);
-    }
+        if (page < maxPage) {
+          setPage(page + 1);
+        }
+      }
 
     const handlePagePrev = () => {
         setPage(page - 1);
     }
 
-    const limit = windowWidth < 1023 ? 3 : 4;
+
     const getData = async () => {
         const response = await axios.get(
-            `http://localhost:8000/car?_page=${page}&_limit=${limit}${search ? `&q=${search}` : ""}&_sort=id&_order=desc`
+            `http://localhost:8000/car?_page=${page}&_limit=4${search ? `&q=${search}` : ""}&_sort=id&_order=desc`
         );
         if (response.status === 200) {
             setList(response.data);
-            const totalCount = response.headers["x-total-count"];
-            const totalPages = Math.ceil(totalCount / limit);
-            setTotalPages(totalPages);
-            const dataWithPhone = response.data.map((item) => {
-                const phone = item.phone;
-                return {
-                    ...item,
-                    phone: phone,
-                };
-            });
-            setList(dataWithPhone);
+            const totalItems = response.headers["x-total-count"];
+        const totalPages = Math.ceil(totalItems / 4); // 4 là số lượng mục trên mỗi trang
+        setMaxPage(totalPages);
         }
     };
     const handleSearchChange = (e) => {
@@ -70,8 +63,7 @@ function Admin() {
     }
     useEffect(() => {
         getData()
-    }, [page, search, limit])
-    const hasNextPage = list.length === limit;
+    }, [page, search])
     return (
         <div className='bg-[#f5f5f9] h-[806px]'>
             <div className='flex h-[806px]'>
@@ -173,7 +165,7 @@ function Admin() {
                             </button>
                             <p>{page}</p>
                             <button
-                                disabled={!hasNextPage}
+                                disabled={page >= maxPage}
                                 onClick={handlePageNext}
                                 className='border bg-[#86DB06] p-[5px_20px] rounded-[10px] flex items-center justify-center text-white text-[15px]'
                             >

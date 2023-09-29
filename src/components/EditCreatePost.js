@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom'
 
 
 function EditCreatePost() {
-    const { listCar } = useContext(Context)
+    const { listCar } = useContext(Context);
     console.log(listCar);
     const [baseImage, setBaseImage] = useState("");
     const { id } = useParams();
@@ -23,7 +23,7 @@ function EditCreatePost() {
     const object = listCar.find((item) => item.id == id);
     const initialType = object ? object.type : "";
     const [type, setType] = useState(initialType);
-    
+
     useEffect(() => {
         const fetchData = async () => {
           // Sử dụng promises để đọc giá trị  từ obj

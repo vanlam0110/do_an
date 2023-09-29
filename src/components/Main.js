@@ -7,20 +7,20 @@ import './login.css'
 import './Responsive.css'
 import { AiFillStar } from 'react-icons/ai'
 import News from './News'
+import { useNavigate } from 'react-router-dom'
 function Main() {
     const { list, setList } = useContext(HomeContext);
     const [page, setPage] = useState(1);
     const [search, setSearch] = useState("");
-    const [windowWidth, setWindowWidth] = useState(window.innerWidth); // State để theo dõi kích thước cửa sổ
-    const [totalPages, setTotalPages] = useState(1);
+    const [maxPage, setMaxPage] = useState(1);
+    const navigate = useNavigate();
     // Hàm để cập nhật kích thước cửa sổ
-    const handleWindowResize = () => {
-      setWindowWidth(window.innerWidth);
-    };
-  
+
     const handlePageNext = () => {
-      setPage(page + 1);
-    }
+        if (page < maxPage) {
+          setPage(page + 1);
+        }
+      }
   
     const handlePagePrev = () => {
       setPage(page - 1);
@@ -30,37 +30,25 @@ function Main() {
       setSearch(e.target.value);
     };
   
-    // Sử dụng useEffect để lắng nghe sự kiện thay đổi kích thước cửa sổ
-    useEffect(() => {
-      window.addEventListener('resize', handleWindowResize);
-      return () => {
-        window.removeEventListener('resize', handleWindowResize);
-      };
-    }, []);
-  
-    // Tạo biến limit dựa trên kích thước cửa sổ
-    const limit = windowWidth < 1023 ? 3 : 4;
+
   
     const getData = async () => {
       const response = await axios.get(
-        `http://localhost:8000/car?_page=${page}&_limit=${limit}${search ? `&q=${search}` : ""}&_sort=id&_order=desc`
+        `http://localhost:8000/car?_page=${page}&_limit=4${search ? `&q=${search}` : ""}&_sort=id&_order=desc`
       );
       if (response.status === 200) {
         setList(response.data);
-        const totalCount = response.headers["x-total-count"];
-            const totalPages = Math.ceil(totalCount / limit);
-            setTotalPages(totalPages);
-            const dataWithPhone = response.data.map((item) => {
-                const phone = item.phone; 
-                return {
-                    ...item,
-                    phone: phone,
-                };
-            });
-            setList(dataWithPhone);
+        const totalItems = response.headers["x-total-count"];
+        const totalPages = Math.ceil(totalItems / 4); // 4 là số lượng mục trên mỗi trang
+        setMaxPage(totalPages);
       }
 
     };
+
+    
+    const handleDetail = (id) => {
+        navigate(`/detail/${id}`);
+      };
 
     const result = list.filter((item) => {
         console.log(item.display);
@@ -70,8 +58,8 @@ function Main() {
     console.log(result);
     useEffect(() => {
         getData();
-    }, [page, search, limit]);
-    const hasNextPage = list.length === limit;
+    }, [page, search]);
+
     return (
         <div className='pt-[50px] pb-[50px] main'>
             <div className='title_main'>
@@ -96,25 +84,34 @@ function Main() {
                     <div className='flex gap-10 main-car'>
                         {result?.map((item) => {
                             return (
-                                <div className='flex '>
-                                    <div className='border shadow-[0_5px_20px_rgba(0,0,0,.1)] rounded-[15px] w-[310px] main-responsive'>
+                               
+                                   <div  onClick={() =>handleDetail(item.id)}  className='h-[470px] cursor-pointer'>
+                                    <div className='border shadow-[0_5px_20px_rgba(0,0,0,.1)] max-h-[540px] rounded-[15px] w-[310px] main-responsive'>
+                                    
                                         <div className='flex flex-col gap-5' key={item}>
                                             <img className='w-[310px] h-[200px] rounded-[15px_15px_0_0]' src={item.image} />
                                             <div className='flex flex-col gap-2  p-[0px_10px_10px_10px]'>
-                                                <h1 className='text-[#E13427] font-bold'>{item.title}</h1>                                    
+                                                <div>
+                                                    <h1 className='text-[#E13427] font-bold'>{item.title}</h1>                                    
                                                     <p className='text-[#16c784] font-bold'>Giá: {item.price}</p>
                                                     <p>Loại xe: {item.type}</p>
-                                                
-                                                <p className='text-[#8a8d91]'>{item.content}</p>
+                                                    {/* <button>Detail</button> */}
+
+                                                </div>
+                                                <p className='text-[#8a8d91] max-h-[120px] overflow-hidden webkit'>{item.content}</p>
                                                 <div className='flex flex-col gap-5'>
-                                                    <p>Người cho thuê: {item.username}</p>
+                                                    <p className=' overflow-hidden h-10 webkit'>Người cho thuê: {item.username}</p>
                                                     <a className='border border-[#2B2E4A] bg-[#2B2E4A] text-white rounded p-[3px_7px]' href={`tel:${item.phone}`}>{item.phone}</a>                                                   
                                                     <a className='border border-[#2B2E4A] text-[#2B2E4A] rounded p-[3px_7px]' target={'_blank'} href={`https://zalo.me/${item.phone}`}>Nhắn zalo</a>
                                                 </div>
                                             </div>
                                         </div>
+                                        
                                     </div>
-                                </div>
+                               </div>
+
+                                   
+                               
                             )
                         })}
                     </div>
@@ -130,7 +127,7 @@ function Main() {
                 </button>
                 <p>{page}</p>
                 <button
-                    disabled={!hasNextPage}
+                    disabled={page >= maxPage}
                     onClick={handlePageNext}
                     className='border bg-[#86DB06] p-[5px_20px] rounded-[10px] flex items-center justify-center text-white text-[15px]'
                 >

@@ -11,6 +11,7 @@ import AdminUser from './admin/AdminUser';
 import EditCreatePost from './components/EditCreatePost';
 import EditUser from './components/EditUser';
 import Admin from './admin/Admin';
+import Detail from './components/Detail';
 const router = createBrowserRouter([
 	{
 		path: '/login',
@@ -51,6 +52,10 @@ const router = createBrowserRouter([
 	{
 		path: '/admin',
 		element: <Admin/>
+	},
+	{
+		path: '/detail/:id',
+		element: <Detail/>
 	}
 ]);
 

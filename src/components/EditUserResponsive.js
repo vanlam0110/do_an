@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import Header from './Header';
 import axios from 'axios';
 import Footer from './Footer'
-import EditUserResponsive from './EditUserResponsive';
-function EditUser() {
+
+function EditUserResponsive() {
   const [listUser, setListUser] = useState([]);
   const [username, setUsername] = useState('');
   const [phone, setPhone] = useState('');
@@ -74,41 +74,39 @@ function EditUser() {
 
   return (
     <div>
-      <Header />
-      <div className='EditUserResponsive'><EditUserResponsive/></div>
-      <div className='EditUser'>
+      <div className=''>
         <div className='flex justify-center items-center pt-[50px] pb-[50px]'>
-          <form className='border border-[#dedede] w-[600px] p-[30px_30px_100px] flex flex-col gap-3 bg-register'>
-            <h1 className='text-[32px] font-bold text-center'>
+          <form className='border border-[#dedede] w-[330px] p-[30px_30px_100px] flex flex-col gap-3 bg-register'>
+            <h1 className='text-[15px] font-bold text-center'>
               Cập nhật thông tin cá nhân
             </h1>
-            <div className='flex flex-col gap-5 pb-[20px]'>
-              <div className='w-full flex gap-5 items-center'>
+            <div className='flex flex-col gap-5 pt-[20px] pb-[20px]'>
+              <div className='w-full flex flex-col gap-3'>
                 <label className=''>Tên hiển thị</label>
                 <input
                   required
-                  className='bg-[#e8f0fe] rounded-[4px] border h-[45px] p-[10px] w-[400px] ml-[12px]'
+                  className='bg-[#e8f0fe] rounded-[4px] border h-[45px] p-[10px] '
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                 />
               </div>
-              <div className='w-full flex gap-5'>
-                <label className='mt-[10px]'>Số điện thoại</label>
+              <div className='w-full flex flex-col gap-3'>
+                <label className=''>Số điện thoại</label>
                 <div className='flex flex-col gap-3'>
                   <input
                     required
-                    className='bg-[#e8f0fe] rounded-[4px] border h-[45px] p-[10px] w-[400px]'
+                    className='bg-[#e8f0fe] rounded-[4px] border h-[45px] p-[10px]'
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
                   />
                 </div>
               </div>
-              <div className='w-full flex gap-5'>
-                <label className='mt-[10px]'>Mật khẩu</label>
-                <div className='flex flex-col gap-3 ml-[25px]'>
+              <div className='w-full flex flex-col gap-3'>
+                <label className=''>Mật khẩu</label>
+                <div className='flex flex-col gap-3 '>
                   <input
                     required
-                    className='bg-[#e8f0fe] rounded-[4px] border h-[45px] p-[10px] w-[400px]'
+                    className='bg-[#e8f0fe] rounded-[4px] border h-[45px] p-[10px]'
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                   />
@@ -125,9 +123,8 @@ function EditUser() {
           </form>
         </div>
       </div>
-      <Footer/>
     </div>
   );
 }
 
-export default EditUser;
+export default EditUserResponsive;

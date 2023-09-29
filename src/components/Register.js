@@ -69,11 +69,11 @@ function Register() {
             <Header />
             <div className=''>
                 <div className='flex justify-center items-center pt-[30px] pb-[30px]'>
-                    <form className='border border-[#dedede] w-[600px] p-[30px_30px_50px] flex flex-col gap-3 bg-register' onSubmit={onSubmit}>
+                    <form className='border border-[#dedede] w-[600px] p-[30px_30px_50px] flex flex-col gap-3 bg-register max-[376px]:w-[330px]' onSubmit={onSubmit}>
                         <h1 className='text-[32px] font-bold text-center'>Đăng Kí</h1>
                         <div className='flex flex-col gap-5'>
                             <div className='w-full flex flex-col gap-3'>
-                                <label>HỌ tên</label>
+                                <label>Họ tên</label>
                                 <input
                                     required                                 
                                     type={'text'}

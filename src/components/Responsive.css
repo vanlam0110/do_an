@@ -10,6 +10,17 @@
     .newreposive{
       display: none;
     }
+
+    .postmanagementResponsive{
+      display: none;
+    }
+
+    .DetailResponsive{
+      display: none;
+    }
+    .EditUserResponsive{
+      display: none;
+    }
 }
 *,
 *::after,
@@ -158,7 +169,7 @@ a {
 }
 .nav__menu {
   position: fixed;
-  top: 17vh;
+  top: 33vh;
   right: 0;
   width: 50vw;
   background: #2B2E4A;
@@ -235,7 +246,7 @@ a {
 }
 
 .main-car{
-  flex-direction: column;
+  flex-wrap: wrap;
 }
 
 .main-responsive h1{
@@ -253,6 +264,48 @@ a {
   .newreposive2{
     display: none;
   }
+
+  .search-mana{
+    margin-left: 290px;
+  }
+
+  .search-mana i{
+    right: 25px !important;
+  }
+
+  .postmanagement{
+    display: none;
+  }
+
+  .postmanagementResponsive{
+    display: block;
+  }
+
+  .detail{
+    width: 350px !important;
+  }
+
+  .detail img{
+    height: 200px !important;
+  }
+
+  .detail h1{
+    font-size: 18px !important;
+  }
+
+  .detail-inf {
+    width: 180px !important;
+    height: 200px !important;
+  }
+
+  .detail-inf h1,p,a{
+    font-size: 15px !important;
+  }
+
+  .DetailResponsive{
+    display: none;
+  }
+
 
   /* Thêm hiệu ứng chuyển slide
 .new-responsive-container {
@@ -432,6 +485,42 @@ a {
   }
 
   .newreposive2{
+    display: none;
+  }
+
+  .postR{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 20px;
+  }
+
+  .search-mana{
+    margin-left: 0;
+  }
+
+  .search-mana i{
+    right: 65px !important;
+  }
+
+  .postmain-res p{
+    font-size: 15px;
+  }
+
+  .DetailResponsive{
+    display: block;
+  }
+  
+  .detail-main{
+    display: none;
+  }
+
+  .EditUserResponsive{
+    display: block;
+  }
+
+  .EditUser{
     display: none;
   }
 }

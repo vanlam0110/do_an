@@ -7,6 +7,8 @@ import { AiFillEdit } from 'react-icons/ai';
 import { useNavigate } from 'react-router-dom';
 import { AiOutlineSearch } from 'react-icons/ai'
 import { GrFormPrevious, GrFormNext } from 'react-icons/gr'
+import PostmanagementResponsive from './PosmanagementResponisve';
+
 
 function Post_management() {
   const { list, setList } = useContext(HomeContext);
@@ -14,19 +16,19 @@ function Post_management() {
   const [toggleStatus, setToggleStatus] = useState({});
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [maxPage, setMaxPage] = useState(1);
   const handlePageNext = () => {
-    setPage(page + 1);
+    if (page < maxPage) {
+      setPage(page + 1);
+    }
   }
 
   const handlePagePrev = () => {
     setPage(page - 1);
   }
-  const limit = windowWidth < 1023 ? 3 : 4;
   const getData = async () => {
     const response = await axios.get(
-      `http://localhost:8000/car?_page=${page}&_limit=${limit}${search ? `&q=${search}` : ""}&_sort=id&_order=desc`
+      `http://localhost:8000/car?_page=${page}&_limit=4${search ? `&q=${search}` : ""}&_sort=id&_order=desc`
     );
     if (response.status === 200) {
       setList(response.data);
@@ -36,17 +38,9 @@ function Post_management() {
       });
       setToggleStatus(initialToggleStatus);
 
-      const totalCount = response.headers["x-total-count"];
-      const totalPages = Math.ceil(totalCount / limit);
-      setTotalPages(totalPages);
-      const dataWithPhone = response.data.map((item) => {
-        const phone = item.phone;
-        return {
-          ...item,
-          phone: phone,
-        };
-      });
-      setList(dataWithPhone);
+      const totalItems = response.headers["x-total-count"];
+        const totalPages = Math.ceil(totalItems / 4); // 4 là số lượng mục trên mỗi trang
+        setMaxPage(totalPages);
     }
   };
   const handleSearchChange = (e) => {
@@ -76,15 +70,16 @@ function Post_management() {
 
   useEffect(() => {
     getData();
-  }, [page, search, limit]);
-  const hasNextPage = list.length === limit;
+  }, [page, search]);
+
   return (
     <div>
       <Header />
-      <div className="">
+      <div className='postmanagementResponsive'><PostmanagementResponsive/></div>
+      <div className="postmanagement">
         <div className="border-b-[1px] flex">
           <h1 className="p-[20px] font-bold text-[20px]">Quản lý tin đăng</h1>
-          <div className='ml-[400px] flex items-center'>
+          <div className='ml-[400px] flex items-center search-mana'>
             <input
               onChange={handleSearchChange}
               className='border border-[#D1D1D1] rounded-[25px] w-[260px] h-[40px] p-[11px_47px_11px_5px] relative '
@@ -158,7 +153,7 @@ function Post_management() {
           </button>
           <p>{page}</p>
           <button
-            disabled={!hasNextPage}
+            disabled={page >= maxPage}
             onClick={handlePageNext}
             className='border bg-[#86DB06] p-[5px_20px] rounded-[10px] flex items-center justify-center text-white text-[15px]'
           >
