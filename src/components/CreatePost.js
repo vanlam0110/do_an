@@ -60,7 +60,7 @@ function Createpost() {
 
         );
         if (response.status === 201) {
-            alert("Đăng bài thàh công")
+            alert("Đăng bài thành công")
             navigate('/')
         }
     }
@@ -104,14 +104,14 @@ function Createpost() {
                             value={title}
                             onChange={(e) => setTitle(e.target.value)}
                             name='title'
-                            className='rounded-[4px] border h-[40px] w-1/4 p-[10px]' />
+                            className='rounded-[4px] border h-[40px] w-1/4 p-[10px] max-[376px]:w-full' />
                     </div>
                     <div className='flex flex-col gap-2 '>
                         <label className='font-bold'>Chọn Loại xe</label>
                         <select 
                             onChange={(e) => setType(e.target.value)} 
                             value={type} 
-                            className='rounded-[4px] border h-[40px] w-1/4 pl-[10px]' 
+                            className='rounded-[4px] border h-[40px] w-1/4 pl-[10px] max-[376px]:w-full' 
                             name='type'>
                             <option value={'1'}>Chọn Loại Xe</option>
                             <option value={'Xe Số'}>Xe SỐ</option>
@@ -128,7 +128,7 @@ function Createpost() {
                             onChange={(e) => setContent(e.target.value)}
                             value={content}
                             name='content'
-                            className='rounded-[4px] border h-[140px] w-3/4 p-[10px]'> </textarea>
+                            className='rounded-[4px] border h-[140px] w-3/4 p-[10px] max-[376px]:w-full max-[376px]:h-[170px]'> </textarea>
                     </div>
 
                     <div className='flex flex-col gap-2'>
@@ -137,7 +137,7 @@ function Createpost() {
                             value={username}
                             onChange={(e) => setUsername(e.target.value)}
                             name='usename'
-                            className='rounded-[4px] border h-[40px] w-1/4 p-[10px]' />
+                            className='rounded-[4px] border h-[40px] w-1/4 p-[10px] max-[376px]:w-full' />
                     </div>
 
                     <div className='flex flex-col gap-2 '>
@@ -146,7 +146,7 @@ function Createpost() {
                             onChange={(e) => setPhone(e.target.value)}
                             value={phone}
                             name='phone'
-                            className='rounded-[4px] border h-[40px] w-1/4 p-[10px]' />
+                            className='rounded-[4px] border h-[40px] w-1/4 p-[10px] max-[376px]:w-full' />
                     </div>
 
                     <div className='flex flex-col gap-2 '>
@@ -155,7 +155,7 @@ function Createpost() {
                             value={price}
                             onChange={(e) => setPrice(e.target.value)}
                             name='price'
-                            className='rounded-[4px] border h-[40px] w-1/4 p-[10px]' />
+                            className='rounded-[4px] border h-[40px] w-1/4 p-[10px] max-[376px]:w-full' />
                     </div>
 
                     <div className='w-full flex flex-col gap-2'>
@@ -164,7 +164,7 @@ function Createpost() {
                             Cập nhật hình ảnh rõ ràng sẽ cho thuê nhanh hơn
                         </p>
                         <div className='w-full'>
-                            <label className='flex flex-col items-center justify-center border-gray-400  w-3/4 border h-[200px] border-dashed rounded-md' htmlFor='file'>
+                            <label className='flex flex-col items-center justify-center border-gray-400  w-3/4 border h-[200px] border-dashed rounded-md max-[376px]:w-full' htmlFor='file'>
                                 <TbCameraUp size={40} />
                                 Thêm ảnh
                             </label>
@@ -182,7 +182,7 @@ function Createpost() {
                     </div>
 
                     <div>
-                        <button type='submit' onClick={postData} className='bg-[#3961fb] rounded-[5px] border h-[45px] w-3/4 text-white font-bold'>
+                        <button type='submit' onClick={postData} className='bg-[#3961fb] rounded-[5px] border h-[45px] w-3/4 text-white font-bold max-[376px]:w-full'>
                             Đăng bài
                         </button>
                     </div>

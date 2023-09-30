@@ -26,7 +26,6 @@ function EditUser() {
   const object = listUser.find((item) => item.username === isLogin);
 
   const handleUpdateAccount = async () => {
-    // Kiểm tra xem các biến username, phone, và password có giá trị hợp lệ hay không.
     if (!username) {
       alert("Bạn chưa điền tên hiển thị");
       return;
@@ -39,8 +38,6 @@ function EditUser() {
       alert("Bạn chưa điền mật khẩu");
       return;
     }
-
-    // Nếu thông tin hợp lệ, thực hiện cập nhật và lưu vào localStorage.
     localStorage.setItem('username', username);
     alert('Cập nhật thành công');
 
@@ -64,7 +61,6 @@ function EditUser() {
   }, []);
 
   useEffect(() => {
-    // Nếu object không tồn tại, không cần thực hiện gán giá trị mặc định.
     if (object) {
       setUsername(object.username);
       setPhone(object.phone);

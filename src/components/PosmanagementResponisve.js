@@ -100,7 +100,7 @@ function Post_management() {
                                                     <p className='text-[#16c784] font-bold'>Giá: {item.price}</p>
                                                     <p>Loại xe: {item.type}</p>
 
-                                                    <p className='text-[#8a8d91]'>{item.content}</p>
+                                                    <p className='text-[#8a8d91] overflow-hidden webkit2'>{item.content}</p>
                                                     <div className='flex flex-col gap-5'>
                                                         <p>Người cho thuê: {item.username}</p>
                                                         <p>Số điện thoại: {item.phone}</p>

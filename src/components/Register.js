@@ -4,15 +4,13 @@ import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios';
 import Footer from './Footer';
 function Register() {
-   
     const navigate = useNavigate();
-
 
     const postData = async (data) => {
         const response = await axios.post(
             'http://localhost:8000/user',
             {
-                username: data.usename,
+                username: data.username,
                 phone: data.phone,
                 password: data.password
             }
@@ -26,7 +24,7 @@ function Register() {
     const onSubmit = (event) => {
         event.preventDefault();
         const data = {
-            usename: event.target.username.value,
+            username: event.target.username.value,
             phone: event.target.phone.value,
             password: event.target.password.value,
             confirmpassword: event.target.confirmpassword.value,
@@ -37,22 +35,19 @@ function Register() {
             alert('Nhập lại mật khẩu sai')
             return;
         }
-
-        let truePhone = false;
-
-
+        let checkPhone = false;
         axios
             .get('http://localhost:8000/user')
             .then((response) => {
-                response.data.forEach((checkPhone) => {
-                    const phoneNumber = checkPhone.phone;
+                response.data.forEach((check) => {
+                    const phoneNumber = check.phone;
                     if (data.phone === phoneNumber) {
-                        truePhone = false;
+                        checkPhone = false;
                     } else {
-                        truePhone = true;
+                        checkPhone = true;
                     }
                 });
-                if (truePhone) {
+                if (checkPhone) {
                     postData(data)
                     alert('Tạo tài khoản thành công')
                     navigate('/login')

@@ -17,8 +17,8 @@ function Header() {
     const handleLogout = () => {
         setState({ phone: '', password: '', username: '' });
         window.localStorage.removeItem('username')
-        // navigate('/')
-        window.location.href='/';
+        navigate('/')
+         
     }
     return (
         

@@ -29,7 +29,7 @@ export default function Footer() {
                         <a><AiFillMail size={25} /></a>
                     </div>
                 </div>
-                <div className=' flex gap-10'>
+                <div className=' flex gap-[190px] max-[767px]:gap-10'>
                 <div className='flex flex-col gap-2 w-[150px] footer_responsive2'>
                     <h1 className='text-white pb-[20px] border-b border-b-[#e84545]'>MENU</h1>
                     <div className='flex items-center gap-3 text-[#a4a4a4] '>

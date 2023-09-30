@@ -17,7 +17,8 @@ function Navbar() {
 		setState({ phone: '', password: '', username: '' });
 		window.localStorage.removeItem('username');
 		window.localStorage.removeItem('isLogin');
-		navigate('/');
+		// navigate('/');
+		window.location.href='/';  
 	};
 	const [active, setActive] = useState('nav__menu');
 	const [icon, setIcon] = useState('nav__toggler');

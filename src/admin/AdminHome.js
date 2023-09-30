@@ -12,9 +12,11 @@ import { BiSolidUser } from 'react-icons/bi'
 import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 import { GrFormPrevious, GrFormNext } from 'react-icons/gr'
+import { AuthContext } from '../context/AuthContext'
 
 function Admin() {
     const { list, setList } = useContext(HomeContext);
+    const { state, setState } = useContext(AuthContext);
     const [search, setSearch] = useState("");
     const navigate = useNavigate();
     const [page, setPage] = useState(1);
@@ -59,6 +61,7 @@ function Admin() {
         }
     }
     const handleLogout = () => {
+        setState({ email: '', password: '' });
         navigate('/admin')
     }
     useEffect(() => {

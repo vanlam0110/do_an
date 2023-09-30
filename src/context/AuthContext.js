@@ -9,6 +9,7 @@ const Provider = AuthContext.Provider;
 
 // b3 boc Provider quanh cai component ma minh can su dung tinh nang context
 const initialState = {
+	email: '',
 	phone: '',
 	password: '',
 	username: '',

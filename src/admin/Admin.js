@@ -8,7 +8,8 @@ export default function Admin() {
     const { list, setList } = useContext(HomeContext);
     const navigate = useNavigate();
     const { state, setState } = useContext(AuthContext);
-
+    const [ email, setEmail ] =  useState('');
+    const [ password, setPassword ] = useState('');
     const getData = async () => {     
         const response = await axios.get(
             'http://localhost:8000/admin',
@@ -21,12 +22,8 @@ export default function Admin() {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        const data = {
-            email: event.target.email.value,
-            password: event.target.password.value,
-        };
 
-        const foundUser = list.find(user => user.email === data.email && user.password === data.password);
+        const foundUser = list.find(user => user.email === email && user.password === password);
 
 
         if (foundUser) {
@@ -53,6 +50,7 @@ export default function Admin() {
                                     required
                                     type={'email'}
                                     name='email'
+                                    onChange={(e) => setEmail(e.target.value)}
                                     className='rounded-[4px] border h-[45px] p-[10px]'
                                 />
                             </div>
@@ -62,6 +60,7 @@ export default function Admin() {
                                     required
                                     type={'password'}
                                     name="password"
+                                    onChange={(e) => setPassword(e.target.value)}
                                     className='rounded-[4px] border h-[45px] p-[10px]'
                                 />
                             </div>

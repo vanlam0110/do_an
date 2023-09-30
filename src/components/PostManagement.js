@@ -31,7 +31,7 @@ function Post_management() {
       `http://localhost:8000/car?_page=${page}&_limit=4${search ? `&q=${search}` : ""}&_sort=id&_order=desc`
     );
     if (response.status === 200) {
-      setList(response.data);
+      setList(response.data);   
       const initialToggleStatus = {};
       response.data.forEach((item) => {
         initialToggleStatus[item.id] = item.display === 1;

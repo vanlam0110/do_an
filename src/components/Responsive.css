@@ -169,7 +169,7 @@ a {
 }
 .nav__menu {
   position: fixed;
-  top: 33vh;
+  top: 18vh;
   right: 0;
   width: 50vw;
   background: #2B2E4A;
@@ -306,6 +306,10 @@ a {
     display: none;
   }
 
+  .EditUserResponsive{
+    display: none;
+  }
+
 
   /* Thêm hiệu ứng chuyển slide
 .new-responsive-container {
@@ -380,7 +384,7 @@ a {
 }
 
 .footer{
-  height: 800px;
+  height: 700px;
 }
 
 .footer img{
